@@ -1,0 +1,26 @@
+<html>
+<head>
+  <title>Konami Code Plugin</title>
+  <style type="text/css">
+    body{
+      font-size: 26pt;
+    }
+  </style>
+</head>
+<body>
+  <div>red</div>
+  <span>orange</span>
+  <p>green</p>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
+
+  <!-- plug-in extracted to another file -->
+  <script src="js/jquery.konami.js"></script>
+
+  <script>
+    $(function(){
+      $().konami();
+    })
+  </script>
+</body>
+</html>
