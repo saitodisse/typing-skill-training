@@ -1,45 +1,45 @@
-;(function($, target){
+;(function($, window){
   "use strict";
+  var window = $(window);
 
-  $.konami = function(){
+  $.Konami = function(){
     var SEQUENCE = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13];
-    var newSeq = [];
+    var errorKeyList = [];
     var expectedSeq = [];
-    var actualIndice = 0;
+    var index = 0;
 
-    var initializeNewSeq = function(){
+    this.initializeNewSeq = function(){
       expectedSeq = [];
       for (var i = 0; i <= SEQUENCE.length; i++) {
         expectedSeq.push(SEQUENCE[i]);
       }
     };
 
-    var checkKonamiCode = function(key){
-      newSeq.push(key);
-      var sameArrayUntiNow = SEQUENCE[actualIndice] === newSeq[actualIndice];
-      var lastSEQindex = SEQUENCE.length - 1;
+    this.checkKonamiCode = function(key){
+      var isCorret = SEQUENCE[index] === key;
 
-      if(!sameArrayUntiNow){
-        $(target).trigger("konami.fail", {keys: newSeq});
-        newSeq = [];
-        newSeq.push(key);
-        actualIndice = 0;
-      }
-
-      if(actualIndice === lastSEQindex){
-        $(target).trigger("konami.success", {keys: newSeq});
-        newSeq = [];
-        actualIndice = 0;
+      if(isCorret){
+        errorKeyList = [];
+        index++;
       }
       else{
-        $(target).trigger("konami.progress", {keys: newSeq});
-        actualIndice++;
+        index = 0;
+        errorKeyList.push(key);
+        window.trigger("konami.fail", { keys: errorKeyList });
       }
 
+      if(index === SEQUENCE.length){
+        index = 0;
+        window.trigger("konami.success", { keys: SEQUENCE });
+      }
+      else{
+        window.trigger("konami.progress",
+          { expected: SEQUENCE[index-1],
+            received: key,
+            index: index,
+            isCorret: isCorret
+          });
+      }
     };
-
-    $(target).on("keyup", function(event){
-      checkKonamiCode(event.which);
-    });
   };
 })(jQuery, window);
