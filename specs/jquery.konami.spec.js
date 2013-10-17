@@ -61,4 +61,25 @@ describe("Konami Plug-In", function(){
     konami.checkKonamiCode(38); //success
     expect(isCorretNow).toBeTruthy();
   })
+
+  it("konami.progress: isCorret catch", function(){
+    var konami = new $.Konami();
+    var isCorretNow;
+
+    $(window).on("konami.progress", function(event, params){
+      isCorretNow = params.isCorret;
+    });
+
+    konami.checkKonamiCode(38); //success
+    expect(isCorretNow).toBeTruthy();
+
+    konami.checkKonamiCode(38); //success
+    expect(isCorretNow).toBeTruthy();
+
+    konami.checkKonamiCode(38); //success - ignore the first
+    expect(isCorretNow).toBeTruthy();
+
+    konami.checkKonamiCode(40); //success
+    expect(isCorretNow).toBeTruthy();
+  })
 });

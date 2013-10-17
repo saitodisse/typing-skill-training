@@ -8,13 +8,6 @@
     var expectedSeq = [];
     var index = 0;
 
-    this.initializeNewSeq = function(){
-      expectedSeq = [];
-      for (var i = 0; i <= SEQUENCE.length; i++) {
-        expectedSeq.push(SEQUENCE[i]);
-      }
-    };
-
     this.checkKonamiCode = function(key){
       var isCorret = SEQUENCE[index] === key;
 
