@@ -22,12 +22,14 @@
     $(function(){
       $("#iframeKonamiSong").css("display","none");
 
-      var result = $.konami();
-      result.done(function(){
+      $.konami();
+      $(window).on("konami.success", function(event, params){
         $("#iframeKonamiSong").css("display","block");
+        console.log(params.keys);
       });
-      result.fail(function(){
+      $(window).on("konami.fail", function(event, params){
         $("#iframeKonamiSong").css("display","none");
+        console.log(params.keys);
       });
     })
   </script>

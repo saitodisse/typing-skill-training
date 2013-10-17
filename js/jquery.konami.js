@@ -2,7 +2,6 @@
   "use strict";
 
   $.konami = function(){
-    var def = $.Deferred();
     var SEQUENCE = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13];
     var newSeq = [];
     var expectedSeq = [];
@@ -21,21 +20,19 @@
       var lastSEQindex = SEQUENCE.length - 1;
 
       if(!sameArrayUntiNow){
-        def.reject();
-        console.log("wrong", newSeq);
+        $(target).trigger("konami.fail", {keys: newSeq});
         newSeq = [];
         newSeq.push(key);
         actualIndice = 0;
       }
 
       if(actualIndice === lastSEQindex){
-        def.resolve();
-        console.log("you did it!", newSeq);
+        $(target).trigger("konami.success", {keys: newSeq});
         newSeq = [];
         actualIndice = 0;
       }
       else{
-        console.log("keep going...", newSeq);
+        $(target).trigger("konami.progress", {keys: newSeq});
         actualIndice++;
       }
 
@@ -44,7 +41,5 @@
     $(target).on("keyup", function(event){
       checkKonamiCode(event.which);
     });
-
-    return def.promise();
   };
 })(jQuery, window);
