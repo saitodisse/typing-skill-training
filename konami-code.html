@@ -3,15 +3,16 @@
   <title>Konami Code Plugin</title>
   <style type="text/css">
     body{
-      font-size: 26pt;
+      background-color: black;
+      background-image: url(http://stevecochrane.com/img/2012/02/konami-logo.png);
+      background-repeat: no-repeat;
+      background-position: center 180px;
+      min-height:100%;
     }
   </style>
 </head>
 <body>
-  <div>red</div>
-  <span>orange</span>
-  <p>green</p>
-
+  <iframe id="iframeKonamiSong" width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/95406812"></iframe>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
 
   <!-- plug-in extracted to another file -->
@@ -19,7 +20,15 @@
 
   <script>
     $(function(){
-      $().konami();
+      $("#iframeKonamiSong").css("display","none");
+
+      var result = $.konami();
+      result.done(function(){
+        $("#iframeKonamiSong").css("display","block");
+      });
+      result.fail(function(){
+        $("#iframeKonamiSong").css("display","none");
+      });
     })
   </script>
 </body>
