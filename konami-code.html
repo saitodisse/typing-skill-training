@@ -1,0 +1,91 @@
+<html>
+<head>
+  <title>Konami Code Plugin</title>
+  <style type="text/css">
+    body{
+      background-color: black;
+    }
+    .konami-logo{
+      font-size: 42px;
+      color: white;
+    }
+    .description{
+      font-size: 24px;
+      color: #eee;
+    }
+    .record{
+      font-size: 18px;
+      color: #efe;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="konami-logo">KONAMI</div>
+  <div class="description"></div>
+  <div class="record"></div>
+  <button>Disable Konami Code</button>
+
+  <script src="js/libs/jquery.js"></script>
+
+  <!-- plug-in extracted to another file -->
+  <script src="js/jquery.konami.js"></script>
+
+  <script>
+    $(function(){
+      $.konami();
+
+      var record;
+
+      var logRecord = function(executedTime){
+        if(record === undefined){
+          record = executedTime;
+        }
+        else if(executedTime < record){
+          record = executedTime;
+        }
+
+        $(".record").text("Your record: " + record + "ms");
+      }
+
+      $(window).on("konami.success", function(event, params){
+        console.log("konami.success");
+        $(".konami-logo").css("color", "green");
+        logRecord(params.executedTime);
+        $(".description").text(params.executedTime + "ms");
+      });
+
+      $(window).on("konami.fail", function(event, params){
+        $(".konami-logo").css("color", "red");
+        console.log("konami.fail");
+      });
+
+      $(window).on("konami.progress", function(event, params){
+        $(".konami-logo").css("color", "white");
+        console.log(params.expected,
+                    params.received,
+                    params.index);
+      });
+
+      $(window).on("konami.enabled", function(){
+          $("button").text("Disable Konami Code");
+      });
+
+      $(window).on("konami.disabled", function(){
+          $("button").text("Enable Konami Code");
+      });
+
+      $("button").click(function(){
+        if($(this).text() === "Disable Konami Code"){
+          $.konami.off();
+        }
+        else{
+          $.konami();
+        }
+
+      });
+
+    })
+  </script>
+</body>
+</html>

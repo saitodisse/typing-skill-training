@@ -1,0 +1,28 @@
+<html>
+<head>
+  <title>Color Plugin</title>
+  <style type="text/css">
+    body{
+      font-size: 26pt;
+    }
+  </style>
+</head>
+<body>
+  <div>red</div>
+  <span>orange</span>
+  <p>green</p>
+
+  <script src="js/libs/jquery.js"></script>
+
+  <!-- plug-in extracted to another file -->
+  <script src="js/jquery.color.js"></script>
+
+  <script>
+    $(function(){
+      $("div").color("red")
+      $("span").color("orange")
+      $("p").color("green");
+    })
+  </script>
+</body>
+</html>
