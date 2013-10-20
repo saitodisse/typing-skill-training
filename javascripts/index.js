@@ -16,7 +16,7 @@
       }
 
       $(".record").text("Your record: " + record + "ms");
-    }
+    };
 
     $(window).on("konami.success", function(event, params){
       console.log("konami.success");
@@ -56,5 +56,5 @@
       }
 
     });
-  })
+  });
 })(jQuery, window);
