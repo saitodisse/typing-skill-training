@@ -25,26 +25,23 @@
 
   <script>
     $(function(){
-      $("#iframeKonamiSong").css("display","none");
-
-      var konami = new $.Konami();
-      $(window).on("keyup", function(event){
-        konami.checkKonamiCode(event.which);
-      });
+      $.konami();
 
       $(window).on("konami.success", function(event, params){
         console.log("konami.success");
+        $.konami.off();
       });
+
       $(window).on("konami.fail", function(event, params){
         console.log("konami.fail");
       });
+
       $(window).on("konami.progress", function(event, params){
         console.log(params.expected,
                     params.received,
-                    params.index,
-                    params.seq,
-                    params.isCorret);
+                    params.index);
       });
+
     })
   </script>
 </body>
