@@ -20,13 +20,15 @@
       tid = setTimeout(failKonami, 1000);
     }
     else{
-      failKonami();
+      return failKonami();
     }
 
     if(index === SEQUENCE.length){
-      index = 0;
-      clearInterval(tid);
-      target.trigger("konami.success");
+      return function(){
+        index = 0;
+        clearInterval(tid);
+        target.trigger("konami.success");
+      }();
     }
 
     target.trigger("konami.progress",
@@ -42,11 +44,14 @@
 
   $.konami = function(){
     console.log('enabling konami...');
+    target.trigger("konami.enabled");
     target.on("keyup", keyUpKonami);
   };
 
   $.konami.off = function(){
     console.log('disabling konami...');
+    clearInterval(tid);
+    target.trigger("konami.disabled");
     target.off("keyup", keyUpKonami);
   };
 

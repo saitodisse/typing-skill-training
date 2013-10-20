@@ -17,6 +17,7 @@
 <body>
 
   <div class="konami-logo">KONAMI</div>
+  <button>Disable Konami Code</button>
 
   <script src="js/libs/jquery.js"></script>
 
@@ -29,17 +30,38 @@
 
       $(window).on("konami.success", function(event, params){
         console.log("konami.success");
+        $(".konami-logo").css("color", "green");
         $.konami.off();
       });
 
       $(window).on("konami.fail", function(event, params){
+        $(".konami-logo").css("color", "red");
         console.log("konami.fail");
       });
 
       $(window).on("konami.progress", function(event, params){
+        $(".konami-logo").css("color", "white");
         console.log(params.expected,
                     params.received,
                     params.index);
+      });
+
+      $(window).on("konami.enabled", function(){
+          $("button").text("Disable Konami Code");
+      });
+
+      $(window).on("konami.disabled", function(){
+          $("button").text("Enable Konami Code");
+      });
+
+      $("button").click(function(){
+        if($(this).text() === "Disable Konami Code"){
+          $.konami.off();
+        }
+        else{
+          $.konami();
+        }
+
       });
 
     })
