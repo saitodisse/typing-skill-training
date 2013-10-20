@@ -4,19 +4,26 @@
   <style type="text/css">
     body{
       background-color: black;
-      font-size: 42px;
     }
     .konami-logo{
-      display: absolute;
-      top: 10px;
-      left: 10px;
+      font-size: 42px;
       color: white;
+    }
+    .description{
+      font-size: 24px;
+      color: #eee;
+    }
+    .record{
+      font-size: 18px;
+      color: #efe;
     }
   </style>
 </head>
 <body>
 
   <div class="konami-logo">KONAMI</div>
+  <div class="description"></div>
+  <div class="record"></div>
   <button>Disable Konami Code</button>
 
   <script src="js/libs/jquery.js"></script>
@@ -28,10 +35,24 @@
     $(function(){
       $.konami();
 
+      var record;
+
+      var logRecord = function(executedTime){
+        if(record === undefined){
+          record = executedTime;
+        }
+        else if(executedTime < record){
+          record = executedTime;
+        }
+
+        $(".record").text("Your record: " + record + "ms");
+      }
+
       $(window).on("konami.success", function(event, params){
         console.log("konami.success");
         $(".konami-logo").css("color", "green");
-        $.konami.off();
+        logRecord(params.executedTime);
+        $(".description").text(params.executedTime + "ms");
       });
 
       $(window).on("konami.fail", function(event, params){

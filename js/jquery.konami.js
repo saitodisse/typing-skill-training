@@ -3,7 +3,8 @@
   var target = $(window),
       SEQUENCE = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13],
       tid,
-      index = 0;
+      index = 0,
+      start;
 
   var failKonami = function(){
     index = 0;
@@ -12,6 +13,10 @@
   };
 
   var checkKonamiCode = function(key){
+    if(index === 0){
+      start = new Date();
+    }
+
     clearInterval(tid);
     var isCorret = SEQUENCE[index] === key;
 
@@ -27,7 +32,7 @@
       return function(){
         index = 0;
         clearInterval(tid);
-        target.trigger("konami.success");
+        target.trigger("konami.success", {executedTime : new Date() - start });
       }();
     }
 
