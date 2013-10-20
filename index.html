@@ -8,17 +8,7 @@
     <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
     <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
     <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
-    <style type="text/css">
-      .konami-logo{
-        font-size: 42px;
-      }
-      .description{
-        font-size: 24px;
-      }
-      .record{
-        font-size: 18px;
-      }
-    </style>
+    <link rel="stylesheet" href="stylesheets/index.css"/>
 
     <title>konami-code by saitodisse</title>
   </head>
@@ -37,25 +27,21 @@
           <span class="right-tail"></span>
         </span>
       </header>
-
       <span class="banner-fix"></span>
-
       <section id="main_content">
         <h3>
+        <br>
+        <br>
+        <h3>
+          <div class="konami-logo">KONAMI</div>
+          <div class="description">Start pressing your keys now...</div>
+          <div class="record"></div>
+          <button>Disable Konami Code</button>
 
-<br>
-<br>
-<h3>
-  <div class="konami-logo">KONAMI</div>
-  <div class="description">Start pressing your keys now...</div>
-  <div class="record"></div>
-  <button>Disable Konami Code</button>
-
-<pre><code>UP, UP, DOWN, DOWN,
+          <pre><code>UP, UP, DOWN, DOWN,
 LEFT, RIGHT, LEFT, RIGHT,
 B, A, START</code></pre>
       </section>
-
       <footer>
         <span class="ribbon-outer">
           <span class="ribbon-inner">
@@ -74,65 +60,7 @@ B, A, START</code></pre>
   <script type="text/javascript" src="javascripts/modernizr.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
-  <script type="text/javascript" src="js/jquery.konami.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function () {
-      $('#main_content').headsmart();
-
-      $.konami();
-
-      var record;
-
-      var logRecord = function(executedTime){
-        if(record === undefined){
-          record = executedTime;
-        }
-        else if(executedTime < record){
-          record = executedTime;
-        }
-
-        $(".record").text("Your record: " + record + "ms");
-      }
-
-      $(window).on("konami.success", function(event, params){
-        console.log("konami.success");
-        $(".konami-logo").css("color", "green");
-        logRecord(params.executedTime);
-        $(".description").text(params.executedTime + "ms");
-      });
-
-      $(window).on("konami.fail", function(event, params){
-        $(".konami-logo").css("color", "red");
-        $(".description").text("try again...");
-        console.log("konami.fail");
-      });
-
-      $(window).on("konami.progress", function(event, params){
-        $(".konami-logo").css("color", "#7C334F");
-        $(".description").text(".");
-        console.log(params.expected,
-                    params.received,
-                    params.index);
-      });
-
-      $(window).on("konami.enabled", function(){
-          $("button").text("Disable Konami Code");
-      });
-
-      $(window).on("konami.disabled", function(){
-          $("button").text("Enable Konami Code");
-      });
-
-      $("button").click(function(){
-        if($(this).text() === "Disable Konami Code"){
-          $.konami.off();
-        }
-        else{
-          $.konami();
-        }
-
-      });
-    })
-  </script>
+  <script type="text/javascript" src="javascripts/jquery.konami.js"></script>
+  <script type="text/javascript" src="javascripts/index.js"></script>
   </body>
 </html>
