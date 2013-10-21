@@ -1,6 +1,6 @@
-konami code
+typing-skill-training ("konami code")
 ===========
-here: http://saitodisse.github.io/jQueryPluginTests/
+here: http://saitodisse.github.io/typing-skill-training/
 
 things to made this an incredible app:
 - Better code with Jasmine's tests
