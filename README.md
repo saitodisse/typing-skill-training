@@ -1,2 +1,14 @@
-jQueryPluginTests
-=================
+konami code
+===========
+here: http://saitodisse.github.io/jQueryPluginTests/
+
+things to make this incredible app:
+- Better code with Jasmine's tests
+- Create/fork new sequences
+- Saving server-side
+- See pressed keys
+- Ranking: by game, global
+- Login by facebook, github and google
+- Post on facebook and twitter
+- Categories for many games, alphabet
+- Play sounds
