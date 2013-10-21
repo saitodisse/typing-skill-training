@@ -7,6 +7,7 @@ things to made this an incredible app:
 - Create/fork new sequences
 - Saving server-side
 - See pressed keys
+- Record intervals of each pressed key
 - Ranking: by game, global
 - Login by facebook, github and google
 - Post on facebook and twitter
