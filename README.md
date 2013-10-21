@@ -2,7 +2,7 @@ konami code
 ===========
 here: http://saitodisse.github.io/jQueryPluginTests/
 
-things to make this incredible app:
+things to made this an incredible app:
 - Better code with Jasmine's tests
 - Create/fork new sequences
 - Saving server-side
