@@ -6,6 +6,22 @@
       index = 0,
       start;
 
+  $.konami = function(){
+    console.log('enabling konami...');
+    target.trigger("konami.enabled");
+    target.on("keyup", keyUpKonami);
+  };
+  var keyUpKonami = function(event){
+    checkKonamiCode(event.which);
+  };
+
+  $.konami.off = function(){
+    console.log('disabling konami...');
+    clearInterval(tid);
+    target.trigger("konami.disabled");
+    target.off("keyup", keyUpKonami);
+  };
+
   var failKonami = function(){
     index = 0;
     clearInterval(tid);
@@ -43,21 +59,5 @@
       });
   };
 
-  var keyUpKonami = function(event){
-    checkKonamiCode(event.which);
-  };
-
-  $.konami = function(){
-    console.log('enabling konami...');
-    target.trigger("konami.enabled");
-    target.on("keyup", keyUpKonami);
-  };
-
-  $.konami.off = function(){
-    console.log('disabling konami...');
-    clearInterval(tid);
-    target.trigger("konami.disabled");
-    target.off("keyup", keyUpKonami);
-  };
 
 })(jQuery, window);
