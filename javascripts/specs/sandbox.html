@@ -1,0 +1,35 @@
+<html>
+<head>
+  <title>SandBox</title>
+</head>
+<body>
+  <textarea id="textarea1"></textarea>
+  <textarea id="textarea2"></textarea>
+
+  <script type="text/javascript" src="../../bower_components/jquery/jquery.js"></script>
+  <script type="text/javascript" src="../jquery.konami.js"></script>
+  <script type="text/javascript">
+    $(function(){
+
+      $("#textarea1").on("konami.enabled", function(){console.log("#textarea1.konami.enabled")});
+      var k1 = $("#textarea1").konami();
+      $("#textarea1").on("konami.keyup", function(ev, opt){
+        console.log("#textarea1 ==> konami.keyup ==> ", opt.which)
+      });
+
+      $("#textarea2").on("konami.enabled", function(){console.log("#textarea2.konami.enabled")});
+      var k2 = $("#textarea2").konami();
+      $("#textarea2").on("konami.keyup", function(ev, opt){
+        console.log("#textarea2 ==> konami.keyup ==> ", opt.which)
+      });
+
+
+      $(window).on("konami.enabled", function(){console.log("WTF1")});
+      $(window).on("konami.keyup", function(ev, opt){
+        console.log("WTF!!")
+      });
+    });
+  </script>
+
+</body>
+</html>
