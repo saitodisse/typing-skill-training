@@ -3,30 +3,60 @@
   <title>SandBox</title>
 </head>
 <body>
-  <textarea id="textarea1"></textarea>
-  <textarea id="textarea2"></textarea>
+  <div>
+    <p>textarea1</p>
+    <textarea id="textarea1"></textarea>
+    <button id="disableKonami1">disable textarea1</button>
+
+    <p>textarea2 (without event.stopPropagation -> see console)</p>
+    <textarea id="textarea2"></textarea>
+    <button id="disableKonami2">disable textarea2</button>
+  </div>
 
   <script type="text/javascript" src="../../bower_components/jquery/jquery.js"></script>
   <script type="text/javascript" src="../jquery.konami.js"></script>
   <script type="text/javascript">
     $(function(){
 
-      $("#textarea1").on("konami.enabled", function(){console.log("#textarea1.konami.enabled")});
-      var k1 = $("#textarea1").konami();
-      $("#textarea1").on("konami.keyup", function(ev, opt){
+      var   ta1 = $("#textarea1")
+          , ta2 = $("#textarea2")
+          , btn1 = $("#disableKonami1")
+          , btn2 = $("#disableKonami2")
+          , konami1
+          , konami2
+      ;
+
+      btn1.click(function(){
+        konami1.konami.off();
+      });
+      btn2.click(function(){
+        konami2.konami.off();
+      });
+
+      ta1.on("konami.enabled", function(){console.log("#textarea1.konami.enabled")});
+      ta2.on("konami.enabled", function(){console.log("#textarea2.konami.enabled")});
+      ta1.on("konami.disabled", function(){console.log("#textarea1.konami.disabled")});
+      ta2.on("konami.disabled", function(){console.log("#textarea2.konami.disabled")});
+
+      konami1 = ta1.konami();
+      console.log("==>konami1", konami1);
+
+      ta1.on("konami.keyup", function(ev, opt){
+        ev.stopPropagation();
         console.log("#textarea1 ==> konami.keyup ==> ", opt.which)
       });
 
-      $("#textarea2").on("konami.enabled", function(){console.log("#textarea2.konami.enabled")});
-      var k2 = $("#textarea2").konami();
-      $("#textarea2").on("konami.keyup", function(ev, opt){
+      konami2 = ta2.konami();
+      console.log("==>konami1", konami1);
+      console.log("==>konami2", konami2);
+
+      ta2.on("konami.keyup", function(ev, opt){
+        //ev.stopPropagation();
         console.log("#textarea2 ==> konami.keyup ==> ", opt.which)
       });
 
-
-      $(window).on("konami.enabled", function(){console.log("WTF1")});
-      $(window).on("konami.keyup", function(ev, opt){
-        console.log("WTF!!")
+      $("body").on("konami.keyup", function(ev, opt){
+        console.log("event propagation -> body.konami.keyup")
       });
     });
   </script>

@@ -1,9 +1,16 @@
 var globalObj = this;
 describe("konami keyup tests", function() {
-  var konami;
+
+  var triggerKeyUp = function(key, context){
+        if(context === undefined){
+          context = globalObj;
+        }
+        $(context).trigger($.Event("keyup", { which: key }));
+      }
+  ;
 
   beforeEach(function() {
-    var konami = $(globalObj).konami();
+    $(globalObj).konami();
   });
 
   it("$.fn.konami is defined", function() {
@@ -13,14 +20,14 @@ describe("konami keyup tests", function() {
 
   it("konami.enabled triggered on init", function() {
     var spyEvent = spyOnEvent(globalObj, 'konami.enabled');
-    konami = $(globalObj).konami();
+    $(globalObj).konami();
     expect(spyEvent).toHaveBeenTriggered();
   });
 
   it("konami.enabled triggered on init on other element", function() {
     var otherElement = $("<div/>");
     var spyEvent = spyOnEvent(otherElement, 'konami.enabled');
-    konami = $(otherElement).konami();
+    $(otherElement).konami();
     expect(spyEvent).toHaveBeenTriggered();
   });
 
@@ -32,8 +39,21 @@ describe("konami keyup tests", function() {
 
   it("konami.keyup triggered on keyup", function() {
     var spyEvent = spyOnEvent(globalObj, 'konami.keyup');
-    $(globalObj).trigger($.Event("keyup", { which: 64 }));
+    triggerKeyUp(64);
     expect(spyEvent).toHaveBeenTriggered();
+  });
+
+  it("konami.keyup stopsPropagation", function() {
+    var div1Element = $("<div>1</div>").appendTo($("#sandbox"));
+    var div2Element = $("<div>2</div>").appendTo(div1Element);
+
+    var spyEvent1 = spyOnEvent(div1Element, 'konami.keyup');
+    var spyEvent2 = spyOnEvent(div2Element, 'konami.keyup');
+
+    triggerKeyUp(64, div2Element);
+
+    expect(spyEvent1).not.toHaveBeenTriggered();
+    expect(spyEvent2).toHaveBeenTriggered();
   });
 
   it("konami.keyup gives the event.which", function() {
@@ -42,7 +62,7 @@ describe("konami keyup tests", function() {
       keyPressed = opt.which;
     });
 
-    $(globalObj).trigger($.Event("keyup", { which: 64 }));
+    triggerKeyUp(64);
 
     expect(keyPressed).toEqual(64);
   });

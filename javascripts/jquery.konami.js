@@ -1,46 +1,50 @@
 ;(function($){
   "use strict";
-  var me,
-      eventTarget,
-      DEFAULT_KONAMI_SEQUENCE = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13];
-
   $.fn.konami = function(options){
     var defaults = {
-      SEQUENCE: DEFAULT_KONAMI_SEQUENCE
+                // default KONAMI sequence
+      SEQUENCE: [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13],
+      eventTarget: $(this)
     };
 
     var options = $.extend(defaults, options);
 
-    eventTarget = this;
-
     return this.each(function() {
-      me = createKonami(options).init();
+      //references konami on 'me' for konami.off
+      createKonami(options).init();
     });
   };
-  $.fn.konami.off = function(){
-    me.disable();
-  };
 
-  function createKonami(options){
-    var  tid,
-         index = 0,
-         start;
+  var createKonami = function (options){
+    var tid,       //setTimeout ID
+        index = 0, //global index
+        start;     //Date() when user starts to type
+
+    $.fn.konami.off = function(){
+      console.log(options.eventTarget)
+      clearInterval(tid);
+      options.eventTarget.trigger("konami.disabled");
+      options.eventTarget.off("keyup", keyup);
+    };
 
     // private methods
     var keyup = function(event){
-      eventTarget.trigger("konami.keyup", {which : event.which});
+      console.log("==> keyup: ", options, event)
+
+      options.eventTarget.trigger("konami.keyup", {which : event.which});
       checkKonamiCode(event.which);
     };
 
     var enable = function(){
-        eventTarget.trigger("konami.enabled");
-        eventTarget.on("keyup", keyup);
+        // attach keyup event
+        options.eventTarget.on("keyup", keyup);
+        options.eventTarget.trigger("konami.enabled");
     };
 
     var failKonami = function(){
       index = 0;
       clearInterval(tid);
-      eventTarget.trigger("konami.fail");
+      options.eventTarget.trigger("konami.fail");
     };
 
     var checkKonamiCode = function(key){
@@ -63,11 +67,11 @@
         return function(){
           index = 0;
           clearInterval(tid);
-          eventTarget.trigger("konami.success", {executedTime : new Date() - start });
+          options.eventTarget.trigger("konami.success", {executedTime : new Date() - start });
         }();
       }
 
-      eventTarget.trigger("konami.progress",
+      options.eventTarget.trigger("konami.progress",
         { expected: options.SEQUENCE[index-1],
           received: key,
           index: index
@@ -78,12 +82,6 @@
       // public methods
       init: function(){
         enable();
-        return this;
-      },
-      disable: function(){
-        clearInterval(tid);
-        eventTarget.trigger("konami.disabled");
-        eventTarget.off("keyup", me.keyup);
       }
     };
   }
