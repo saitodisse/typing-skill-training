@@ -3,7 +3,7 @@
   $(document).ready(function () {
     $('#main_content').headsmart();
 
-    $.konami();
+    $(window).konami();
 
     var record;
 

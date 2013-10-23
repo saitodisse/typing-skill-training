@@ -1,31 +1,47 @@
-;(function($, window){
+;(function($){
   "use strict";
-  var target = $(window),
+  var eventTarget,
       SEQUENCE = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13],
       tid,
       index = 0,
       start;
 
-  $.konami = function(){
-    console.log('enabling konami...');
-    target.trigger("konami.enabled");
-    target.on("keyup", keyUpKonami);
+  $.fn.konami = function(){
+    eventTarget = this;
+    return this.data("konami", createKonami(this).init());
+  };
+  $.fn.konami.off = function(){
+    clearInterval(tid);
+    eventTarget.trigger("konami.disabled");
+    eventTarget.off("keyup", keyUpKonami);
+  };
+
+  var init = function(){
+    enablePlugin();
+    return this;
+  };
+
+  function createKonami(container){
+    var me = {
+      container: container,
+      init: init
+    };
+
+    return me;
+  }
+
+  var enablePlugin = function(){
+    eventTarget.trigger("konami.enabled");
+    eventTarget.on("keyup", keyUpKonami);
   };
   var keyUpKonami = function(event){
     checkKonamiCode(event.which);
   };
 
-  $.konami.off = function(){
-    console.log('disabling konami...');
-    clearInterval(tid);
-    target.trigger("konami.disabled");
-    target.off("keyup", keyUpKonami);
-  };
-
   var failKonami = function(){
     index = 0;
     clearInterval(tid);
-    target.trigger("konami.fail");
+    eventTarget.trigger("konami.fail");
   };
 
   var checkKonamiCode = function(key){
@@ -48,16 +64,17 @@
       return function(){
         index = 0;
         clearInterval(tid);
-        target.trigger("konami.success", {executedTime : new Date() - start });
+        eventTarget.trigger("konami.success", {executedTime : new Date() - start });
       }();
     }
 
-    target.trigger("konami.progress",
+    eventTarget.trigger("konami.progress",
       { expected: SEQUENCE[index-1],
         received: key,
         index: index
       });
   };
+
 
 
 })(jQuery, window);
