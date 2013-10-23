@@ -16,15 +16,14 @@
     eventTarget.off("keyup", keyUpKonami);
   };
 
-  var init = function(){
-    enablePlugin();
-    return this;
-  };
-
   function createKonami(container){
     var me = {
       container: container,
-      init: init
+
+      init: function(){
+        enablePlugin();
+        return this;
+      }
     };
 
     return me;
