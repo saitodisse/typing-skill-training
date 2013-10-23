@@ -1,20 +1,28 @@
 ;(function($){
   "use strict";
   var me,
-      eventTarget;
+      eventTarget,
+      DEFAULT_KONAMI_SEQUENCE = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13];
 
-  $.fn.konami = function(){
+  $.fn.konami = function(options){
+    var defaults = {
+      SEQUENCE: DEFAULT_KONAMI_SEQUENCE
+    };
+
+    var options = $.extend(defaults, options);
+
     eventTarget = this;
-    me = createKonami(this).init();
-    return this.data("konami", me);
+
+    return this.each(function() {
+      me = createKonami(options).init();
+    });
   };
   $.fn.konami.off = function(){
     me.disable();
   };
 
-  function createKonami(){
-    var  SEQUENCE = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13],
-         tid,
+  function createKonami(options){
+    var  tid,
          index = 0,
          start;
 
@@ -41,7 +49,7 @@
       }
 
       clearInterval(tid);
-      var isCorret = SEQUENCE[index] === key;
+      var isCorret = options.SEQUENCE[index] === key;
 
       if(isCorret){
         index++;
@@ -51,7 +59,7 @@
         return failKonami();
       }
 
-      if(index === SEQUENCE.length){
+      if(index === options.SEQUENCE.length){
         return function(){
           index = 0;
           clearInterval(tid);
@@ -60,7 +68,7 @@
       }
 
       eventTarget.trigger("konami.progress",
-        { expected: SEQUENCE[index-1],
+        { expected: options.SEQUENCE[index-1],
           received: key,
           index: index
         });
