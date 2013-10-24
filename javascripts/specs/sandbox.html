@@ -5,15 +5,17 @@
 <body>
   <h1>Typing Skill Training Sandbox</h1>
   <div>
-    <p>textarea1</p>
     <textarea id="textarea1"></textarea>
     <button id="enableTypingSkillTraining1">$("#textarea1").typingSkillTraining()</button>
     <button id="disableTypingSkillTraining1">$("#textarea1").data("typingSkillTraining").off()</button>
+    <p>events:</p>
+    <p><button id="enabled">&nbsp;</button>$("#textarea1").typingSkillTraining.enabled</p>
+    <p><button id="disabled">&nbsp;</button>$("#textarea1").typingSkillTraining.disabled</p>
+    <p><button id="keyup">&nbsp;</button>$("#textarea1").typingSkillTraining.keyup</p>
+    <p>$("#textarea1").typingSkillTraining.progress: <pre id="progress">&nbsp;</pre></p>
+    <p><button id="fail">&nbsp;</button>$("#textarea1").typingSkillTraining.fail</p>
+    <p>$("#textarea1").typingSkillTraining.success: <pre id="success">&nbsp;</pre></p>
 
-    <p>textarea2</p>
-    <textarea id="textarea2"></textarea>
-    <button id="enableTypingSkillTraining2">$("#textarea2").typingSkillTraining()</button>
-    <button id="disableTypingSkillTraining2">$("#textarea2").data("typingSkillTraining").off()</button>
   </div>
 
   <script type="text/javascript" src="../../bower_components/jquery/jquery.js"></script>
@@ -21,47 +23,66 @@
   <script type="text/javascript">
     $(function(){
       var ta1 = $("#textarea1")
-        , ta2 = $("#textarea2")
         , btnEnable1 = $("#enableTypingSkillTraining1")
-        , btnEnable2 = $("#enableTypingSkillTraining2")
         , btnDisable1 = $("#disableTypingSkillTraining1")
-        , btnDisable2 = $("#disableTypingSkillTraining2")
         , typingSkillTraining1
-        , typingSkillTraining2
       ;
 
       //clean textAreas
       ta1.val("");
-      ta2.val("");
+
+      var blink = function(eleId){
+        $(eleId)
+          .stop()
+          .fadeOut(20)
+          .fadeIn(20)
+          .fadeOut(50)
+          .fadeIn(100);
+      };
+
+      var printProperties = function(obj){
+        if(obj === undefined){
+          return;
+        }
+        var props = Object.getOwnPropertyNames(obj);
+        var result = "";
+        for (var i = 0; i < props.length; i++) {
+          var item = props[i];
+
+          if(i > 0){
+            result += "\n";
+          }
+          result += item;
+          result += ":";
+          result += obj[props[i]];
+        };
+
+        return result;
+      }
 
       //attach typingSkillTraining enabled/disabled events
-      ta1.on("typingSkillTraining.enabled", function() {console.log("#textarea1.typingSkillTraining.enabled")});
-      ta2.on("typingSkillTraining.enabled", function() {console.log("#textarea2.typingSkillTraining.enabled")});
-      ta1.on("typingSkillTraining.disabled", function() {console.log("#textarea1.typingSkillTraining.disabled")});
-      ta2.on("typingSkillTraining.disabled", function() {console.log("#textarea2.typingSkillTraining.disabled")});
+      ta1.on("typingSkillTraining.enabled",  function(){ blink("#enabled") });
+      ta1.on("typingSkillTraining.disabled", function(){ blink("#disabled") });
 
       //attach typingSkillTraining keyup events
-      ta2.on("typingSkillTraining.keyup", function(ev, opt){
-        ev.stopPropagation();
-        console.log("#textarea2 ==> typingSkillTraining.keyup ==> ", opt.which)
-      });
       ta1.on("typingSkillTraining.keyup", function(ev, opt){
-        ev.stopPropagation();
-        console.log("#textarea1 ==> typingSkillTraining.keyup ==> ", opt.which)
+        $("#keyup").text(printProperties(opt));
+      });
+      ta1.on("typingSkillTraining.progress", function(ev, opt){
+        $("#progress").text(printProperties(opt));
+      });
+
+      ta1.on("typingSkillTraining.fail", function(){ blink("#fail") });
+      ta1.on("typingSkillTraining.success", function(ev, opt){
+        $("#success").text(printProperties(opt));
       });
 
       //set click events to buttons
       btnEnable1.click(function(){
         ta1.typingSkillTraining();
       });
-      btnEnable2.click(function(){
-        ta2.typingSkillTraining();
-      });
       btnDisable1.click(function(){
         ta1.data("typingSkillTraining").off();
-      });
-      btnDisable2.click(function(){
-        ta2.data("typingSkillTraining").off();
       });
 
       //check bubbling - event propagation
