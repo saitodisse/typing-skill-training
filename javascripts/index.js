@@ -1,39 +1,56 @@
 ;(function($, window){
   "use strict";
   $(document).ready(function () {
+    var record
+      , logRecord = function(executedTime){
+          if(record === undefined){
+            record = executedTime;
+          }
+          else if(executedTime < record){
+            record = executedTime;
+          }
+
+          $(".record").text("Your record: " + record + "ms");
+        }
+    ;
+
     $('#main_content').headsmart();
 
     $(window).typingSkillTraining();
-
-    var record;
-
-    var logRecord = function(executedTime){
-      if(record === undefined){
-        record = executedTime;
-      }
-      else if(executedTime < record){
-        record = executedTime;
-      }
-
-      $(".record").text("Your record: " + record + "ms");
-    };
 
     $(window).on("typingSkillTraining.success", function(event, params){
       console.log("typingSkillTraining.success");
       $(".typingSkillTraining-logo").css("color", "green");
       logRecord(params.executedTime);
       $(".description").text(params.executedTime + "ms");
+      $(".keysPressed").css("color", "green");
+      $(".keysPressed").fadeOut(function(){
+        $(".keysPressed").text("");
+        $(".keysPressed").show();
+      });
     });
 
     $(window).on("typingSkillTraining.fail", function(event, params){
       $(".typingSkillTraining-logo").css("color", "red");
       $(".description").text("try again...");
+      $(".keysPressed").text("");
       console.log("typingSkillTraining.fail");
     });
 
     $(window).on("typingSkillTraining.progress", function(event, params){
+      event.preventDefault();
+
       $(".typingSkillTraining-logo").css("color", "#7C334F");
       $(".description").text(".");
+
+      var keyPressedText = $(".keysPressed").text();
+      if(keyPressedText.length === 0){
+        $(".keysPressed").text(params.received);
+      } else{
+        $(".keysPressed").text($(".keysPressed").text() + ", "+ params.received);
+      }
+
+
       console.log(params.expected,
                   params.received,
                   params.index);
@@ -47,14 +64,5 @@
         $("button").text("Enable TypingSkillTraining Code");
     });
 
-    $("button").click(function(){
-      if($(this).text() === "Disable TypingSkillTraining Code"){
-        $.typingSkillTraining.off();
-      }
-      else{
-        $.typingSkillTraining();
-      }
-
-    });
   });
 })(jQuery, window);

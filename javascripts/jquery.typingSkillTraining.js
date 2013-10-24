@@ -2,7 +2,8 @@
   $.extend($.fn, {
       typingSkillTraining: function(param, options) {
           options = $.extend({
-            SEQUENCE: [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13] // default KONAMI sequence
+              SEQUENCE: [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13] // default KONAMI sequence
+            , disableFunction: undefined
           }, options);
 
           this.each(function() {
@@ -16,6 +17,12 @@
                   // attach keyup event
                   current.on("keyup", keyup);
                   current.trigger("typingSkillTraining.enabled");
+              };
+
+              var disable = function(){
+                  // attach keyup event
+                  current.off("keyup", keyup);
+                  current.trigger("typingSkillTraining.disabled");
               };
 
               // private methods
@@ -62,9 +69,10 @@
               };
 
               enable();
+              options.disableFunction = disable;
 
-          }).data('cheatCodeTraining', {
-              // Plugin interface object
+          }).data('typingSkillTraining', {
+              off: options.disableFunction
           });
 
           return this;
