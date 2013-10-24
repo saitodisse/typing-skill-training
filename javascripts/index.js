@@ -3,7 +3,7 @@
   $(document).ready(function () {
     $('#main_content').headsmart();
 
-    $(window).konami();
+    $(window).typingSkillTraining();
 
     var record;
 
@@ -18,41 +18,41 @@
       $(".record").text("Your record: " + record + "ms");
     };
 
-    $(window).on("konami.success", function(event, params){
-      console.log("konami.success");
-      $(".konami-logo").css("color", "green");
+    $(window).on("typingSkillTraining.success", function(event, params){
+      console.log("typingSkillTraining.success");
+      $(".typingSkillTraining-logo").css("color", "green");
       logRecord(params.executedTime);
       $(".description").text(params.executedTime + "ms");
     });
 
-    $(window).on("konami.fail", function(event, params){
-      $(".konami-logo").css("color", "red");
+    $(window).on("typingSkillTraining.fail", function(event, params){
+      $(".typingSkillTraining-logo").css("color", "red");
       $(".description").text("try again...");
-      console.log("konami.fail");
+      console.log("typingSkillTraining.fail");
     });
 
-    $(window).on("konami.progress", function(event, params){
-      $(".konami-logo").css("color", "#7C334F");
+    $(window).on("typingSkillTraining.progress", function(event, params){
+      $(".typingSkillTraining-logo").css("color", "#7C334F");
       $(".description").text(".");
       console.log(params.expected,
                   params.received,
                   params.index);
     });
 
-    $(window).on("konami.enabled", function(){
-        $("button").text("Disable Konami Code");
+    $(window).on("typingSkillTraining.enabled", function(){
+        $("button").text("Disable TypingSkillTraining Code");
     });
 
-    $(window).on("konami.disabled", function(){
-        $("button").text("Enable Konami Code");
+    $(window).on("typingSkillTraining.disabled", function(){
+        $("button").text("Enable TypingSkillTraining Code");
     });
 
     $("button").click(function(){
-      if($(this).text() === "Disable Konami Code"){
-        $.konami.off();
+      if($(this).text() === "Disable TypingSkillTraining Code"){
+        $.typingSkillTraining.off();
       }
       else{
-        $.konami();
+        $.typingSkillTraining();
       }
 
     });

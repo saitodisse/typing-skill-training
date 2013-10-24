@@ -6,63 +6,63 @@
   <div>
     <p>textarea1</p>
     <textarea id="textarea1"></textarea>
-    <button id="enableKonami1">enable konami 1</button>
-    <button id="disableKonami1">disable konami 1</button>
+    <button id="enableTypingSkillTraining1">enable typingSkillTraining 1</button>
+    <button id="disableTypingSkillTraining1">disable typingSkillTraining 1</button>
 
     <p>textarea2 (without event.stopPropagation -> see console)</p>
     <textarea id="textarea2"></textarea>
-    <button id="enableKonami2">enable konami 2</button>
-    <button id="disableKonami2">disable konami 2</button>
+    <button id="enableTypingSkillTraining2">enable typingSkillTraining 2</button>
+    <button id="disableTypingSkillTraining2">disable typingSkillTraining 2</button>
   </div>
 
   <script type="text/javascript" src="../../bower_components/jquery/jquery.js"></script>
-  <script type="text/javascript" src="../jquery.konami.js"></script>
+  <script type="text/javascript" src="../jquery.typingSkillTraining.js"></script>
   <script type="text/javascript">
     $(function(){
 
       var   ta1 = $("#textarea1")
           , ta2 = $("#textarea2")
-          , btnEnable1 = $("#enableKonami1")
-          , btnEnable2 = $("#enableKonami2")
-          , btnDisable1 = $("#disableKonami1")
-          , btnDisable2 = $("#disableKonami2")
-          , konami1
-          , konami2
+          , btnEnable1 = $("#enableTypingSkillTraining1")
+          , btnEnable2 = $("#enableTypingSkillTraining2")
+          , btnDisable1 = $("#disableTypingSkillTraining1")
+          , btnDisable2 = $("#disableTypingSkillTraining2")
+          , typingSkillTraining1
+          , typingSkillTraining2
       ;
 
 
       btnEnable1.click(function(){
-        ta1.konami(); //thats is not working
+        ta1.typingSkillTraining(); //thats is not working
       });
       btnEnable2.click(function(){
-        ta2.konami();
+        ta2.typingSkillTraining();
       });
       btnDisable1.click(function(){
-        ta1.konami.off(); //thats is not working
+        ta1.typingSkillTraining.off(); //thats is not working
       });
       btnDisable2.click(function(){
-        ta2.konami.off();
+        ta2.typingSkillTraining.off();
       });
 
-      ta1.on("konami.enabled", function() {console.log("#textarea1.konami.enabled")});
-      ta2.on("konami.enabled", function() {console.log("#textarea2.konami.enabled")});
-      ta1.on("konami.disabled", function(){console.log("#textarea1.konami.disabled")});
-      ta2.on("konami.disabled", function(){console.log("#textarea2.konami.disabled")});
+      ta1.on("typingSkillTraining.enabled", function() {console.log("#textarea1.typingSkillTraining.enabled")});
+      ta2.on("typingSkillTraining.enabled", function() {console.log("#textarea2.typingSkillTraining.enabled")});
+      ta1.on("typingSkillTraining.disabled", function(){console.log("#textarea1.typingSkillTraining.disabled")});
+      ta2.on("typingSkillTraining.disabled", function(){console.log("#textarea2.typingSkillTraining.disabled")});
 
-      konami1 = ta1.konami();
-      konami2 = ta2.konami();
+      typingSkillTraining1 = ta1.typingSkillTraining();
+      typingSkillTraining2 = ta2.typingSkillTraining();
 
-      ta1.on("konami.keyup", function(ev, opt){
+      ta1.on("typingSkillTraining.keyup", function(ev, opt){
         ev.stopPropagation();
-        console.log("#textarea1 ==> konami.keyup ==> ", opt.which)
+        console.log("#textarea1 ==> typingSkillTraining.keyup ==> ", opt.which)
       });
-      ta2.on("konami.keyup", function(ev, opt){
+      ta2.on("typingSkillTraining.keyup", function(ev, opt){
         ev.stopPropagation();
-        console.log("#textarea2 ==> konami.keyup ==> ", opt.which)
+        console.log("#textarea2 ==> typingSkillTraining.keyup ==> ", opt.which)
       });
 
-      $("body").on("konami.keyup", function(ev, opt){
-        console.log("event propagation -> body.konami.keyup")
+      $("body").on("typingSkillTraining.keyup", function(ev, opt){
+        console.log("event propagation -> body.typingSkillTraining.keyup")
       });
     });
   </script>

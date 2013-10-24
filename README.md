@@ -1,4 +1,4 @@
-typing-skill-training ("konami code")
+Typing Skill Training
 ===========
 here: http://saitodisse.github.io/typing-skill-training/
 
@@ -20,6 +20,6 @@ Regex game
 - **3** dogs
 - I want **17** cakes
 - Only **10.50** on tips for you
-- this is your serial 234.546.800 
+- this is your serial 234.546.800
 
 Matches all bold strings with a minimum sized regex
