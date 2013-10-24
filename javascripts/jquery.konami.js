@@ -1,16 +1,12 @@
 ;(function($){
   "use strict";
   $.fn.konami = function(options){
-    var defaults = {
-                // default KONAMI sequence
-      SEQUENCE: [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13],
-      eventTarget: $(this)
-    };
-
-    var options = $.extend(defaults, options);
+      options = $.extend({
+        SEQUENCE: [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13], // default KONAMI sequence
+        eventTarget: this
+      }, options);
 
     return this.each(function() {
-      //references konami on 'me' for konami.off
       createKonami(options).init();
     });
   };
@@ -29,8 +25,6 @@
 
     // private methods
     var keyup = function(event){
-      console.log("==> keyup: ", options, event)
-
       options.eventTarget.trigger("konami.keyup", {which : event.which});
       checkKonamiCode(event.which);
     };
