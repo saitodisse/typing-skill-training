@@ -14,57 +14,67 @@
   </head>
 
   <body>
-    <a id="forkme_banner" href="https://github.com/saitodisse/jQueryPluginTests">View on GitHub</a>
-    <div class="shell">
+    <div class="loading">Loading</div>
+    <div class="container hidden">
+      <a id="forkme_banner" href="https://github.com/saitodisse/jQueryPluginTests">View on GitHub</a>
+      <div class="shell">
 
-      <header>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <h1>Typing Skill Training</h1>
-            <h2>typing, training, keyboard</h2>
+        <header>
+          <span class="ribbon-outer">
+            <span class="ribbon-inner">
+              <h1>Typing Skill Training</h1>
+              <h2>typing, training, keyboard</h2>
+            </span>
+            <span class="left-tail"></span>
+            <span class="right-tail"></span>
           </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-      </header>
-      <span class="banner-fix"></span>
-      <section id="main_content">
-        <h3>
-        <br>
-        <br>
-        <h3>
-          <div class="typingSkillTraining-logo">KONAMI CODE</div>
-          <div class="keysPressed"></div>
-          <div class="description">Start pressing your keys now...</div>
-          <div class="record"></div>
+        </header>
+        <span class="banner-fix"></span>
+        <section id="main_content">
+          <h3>
+          <br>
+          <br>
+          <h3>
+            <div class="typingSkillTraining-logo">KONAMI CODE</div>
+            <div class="keysPressed"></div>
+            <div class="description">Start pressing your keys now...</div>
+            <div class="record"></div>
 
-          <pre><code>UP, UP, DOWN, DOWN,
-LEFT, RIGHT, LEFT, RIGHT,
-B, A, START</code></pre>
-      </section>
-      <footer>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <p>this project by <a href="https://github.com/saitodisse">saitodisse</a> can be found on <a href="https://github.com/saitodisse/jQueryPluginTests">GitHub</a></p>
+            <pre><code>UP, UP, DOWN, DOWN,
+  LEFT, RIGHT, LEFT, RIGHT,
+  B, A, START</code></pre>
+        </section>
+        <footer>
+          <span class="ribbon-outer">
+            <span class="ribbon-inner">
+              <p>this project by <a href="https://github.com/saitodisse">saitodisse</a> can be found on <a href="https://github.com/saitodisse/jQueryPluginTests">GitHub</a></p>
+            </span>
+            <span class="left-tail"></span>
+            <span class="right-tail"></span>
           </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
-        <p>code learned at <a href="http://howtocode.com.br/cursos/jquery">"jQuery: Dominando o framework"</a> javascript course at </p>
-        <a href="/">
-          <img src="/assets/logo-755a8f0f79d91f9589bf465e10852e3a.png" alt="HOWTO: workshops e e-books para geeks.">
-        </a>
-        <span class="octocat"></span>
-      </footer>
+          <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
+          <p>code learned at <a href="http://howtocode.com.br/cursos/jquery">"jQuery: Dominando o framework"</a> javascript course at </p>
+          <a href="/">
+            <img src="/assets/logo-755a8f0f79d91f9589bf465e10852e3a.png" alt="HOWTO: workshops e e-books para geeks.">
+          </a>
+          <span class="octocat"></span>
+        </footer>
 
+      </div>
     </div>
+
 
   <!-- plug-in extracted to another file -->
   <script type="text/javascript" src="javascripts/modernizr.js"></script>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+  <script type="text/javascript" src="bower_components/jquery/jquery.js"></script>
   <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
   <script type="text/javascript" src="javascripts/jquery.typingSkillTraining.js"></script>
-  <script type="text/javascript" src="javascripts/index.js"></script>
+  <!--<script type="text/javascript" src="javascripts/index.js"></script>-->
+
+  <script type="text/javascript" src="javascripts/konami.js"></script>
+  <script type="text/javascript" src="javascripts/konami.loading.js"></script>
+  <script type="text/javascript" src="javascripts/konami.container.js"></script>
+  <script type="text/javascript" src="javascripts/konami.boot.js"></script>
+
   </body>
 </html>

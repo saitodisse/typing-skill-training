@@ -1,4 +1,15 @@
 ;(function($, window){
+  /*
+    ALL ELEMENTS that I have on this page:
+    $(window)
+    $(document)
+    $(".record")
+    $(".typingSkillTraining-logo")
+    $(".description")
+    $(".keysPressed")
+    $("button")
+  */
+
   "use strict";
   $(document).ready(function () {
     var record
