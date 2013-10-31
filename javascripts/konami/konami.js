@@ -3,10 +3,7 @@
 
   Konami.init = function(page){
     this.target = new Konami.Target($(global));
-    this.target.initEvents();
-
-    this.typingComponent = new Konami.TypingComponent($(global));
-    this.typingComponent.init();
+    this.target.initTypingComponent();
 
     this.page = $(page);
     this.container = new Konami.Container(this.page.find(".container"));

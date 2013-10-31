@@ -1,6 +1,7 @@
 <html>
 <head>
   <title>Typing Skill Training Sandbox</title>
+  <meta charset="UTF-8">
 </head>
 <body>
   <h1>Typing Skill Training Sandbox</h1>
@@ -60,35 +61,40 @@
         return result;
       }
 
-      //attach typingSkillTraining enabled/disabled events
-      ta1.on("typingSkillTraining.enabled",  function(){ blink("#enabled") });
-      ta1.on("typingSkillTraining.disabled", function(){ blink("#disabled") });
-
-      //attach typingSkillTraining keyup events
-      ta1.on("typingSkillTraining.keyup", function(ev, opt){
-        $("#keyup").text(printProperties(opt));
-      });
-      ta1.on("typingSkillTraining.progress", function(ev, opt){
-        $("#progress").text(printProperties(opt));
-      });
-
-      ta1.on("typingSkillTraining.fail", function(){ blink("#fail") });
-      ta1.on("typingSkillTraining.success", function(ev, opt){
-        $("#success").text(printProperties(opt));
-      });
-
       //set click events to buttons
       btnEnable1.click(function(){
-        ta1.typingSkillTraining();
+        ta1.typingSkillTraining({
+            onDisable: function(){
+            blink("#disabled");
+          }
+
+          , onEnable: function(){
+            blink("#enabled");
+          }
+
+          , onKeyup: function(opt){
+            $("#keyup").text(printProperties(opt));
+          }
+
+          , onFail: function(){
+            blink("#fail");
+          }
+
+          , onSuccess: function(opt){
+            $("#success").text(printProperties(opt));
+          }
+
+          , onProgress: function(opt){
+            $("#progress").text(printProperties(opt));
+          }
+
+        });
       });
+
       btnDisable1.click(function(){
         ta1.data("typingSkillTraining").off();
       });
 
-      //check bubbling - event propagation
-      $("body").on("typingSkillTraining.keyup", function(ev, opt){
-        console.log("event propagation -> body.typingSkillTraining.keyup")
-      });
     });
   </script>
 
