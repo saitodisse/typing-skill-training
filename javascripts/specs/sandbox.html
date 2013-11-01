@@ -2,21 +2,32 @@
 <head>
   <title>Typing Skill Training Sandbox</title>
   <meta charset="UTF-8">
+  <style type="text/css">
+    .boxed{
+      border-color: #bbb;
+      border-width: 2px;
+      border-style: solid;
+      margin: 15px;
+      padding: 5px;
+      background-color: #eee;
+    }
+  </style>
 </head>
 <body>
   <h1>Typing Skill Training Sandbox</h1>
   <div>
     <textarea id="textarea1"></textarea>
-    <button id="enableTypingSkillTraining1">$("#textarea1").typingSkillTraining()</button>
-    <button id="disableTypingSkillTraining1">$("#textarea1").data("typingSkillTraining").off()</button>
+    <div class="boxed" id="enableTypingSkillTraining1">$("#textarea1").typingSkillTraining()</div>
+    <div class="boxed" id="disableTypingSkillTraining1">$("#textarea1").data("typingSkillTraining").off()</div>
     <p>events:</p>
-    <p><button id="enabled">&nbsp;</button>$("#textarea1").typingSkillTraining.enabled</p>
-    <p><button id="disabled">&nbsp;</button>$("#textarea1").typingSkillTraining.disabled</p>
-    <p><button id="keyup">&nbsp;</button>$("#textarea1").typingSkillTraining.keyup</p>
-    <p>$("#textarea1").typingSkillTraining.progress: <pre id="progress">&nbsp;</pre></p>
-    <p><button id="fail">&nbsp;</button>$("#textarea1").typingSkillTraining.fail</p>
-    <p>$("#textarea1").typingSkillTraining.success: <pre id="success">&nbsp;</pre></p>
-
+    <div class="boxed" id="enabled">$("#textarea1").typingSkillTraining.enabled</div>
+    <div class="boxed" id="disabled">$("#textarea1").typingSkillTraining.disabled</div>
+    <div class="boxed" id="keyup">$("#textarea1").typingSkillTraining.keyup</div>
+    $("#textarea1").typingSkillTraining.progress: 
+      <pre id="progress">&nbsp;</pre>
+    <div class="boxed" id="fail">$("#textarea1").typingSkillTraining.fail</div>
+    $("#textarea1").typingSkillTraining.success: 
+      <pre id="success">&nbsp;</pre>
   </div>
 
   <script type="text/javascript" src="../../bower_components/jquery/jquery.js"></script>
@@ -35,10 +46,8 @@
       var blink = function(eleId){
         $(eleId)
           .stop()
-          .fadeOut(20)
-          .fadeIn(20)
           .fadeOut(50)
-          .fadeIn(100);
+          .fadeIn(50);
       };
 
       var printProperties = function(obj){
@@ -61,35 +70,32 @@
         return result;
       }
 
-      //set click events to buttons
-      btnEnable1.click(function(){
-        ta1.typingSkillTraining({
-            onDisable: function(){
-            blink("#disabled");
-          }
+      ta1.typingSkillTraining({
+          onDisable: function(){
+          blink("#disabled");
+        }
 
-          , onEnable: function(){
-            blink("#enabled");
-          }
+        , onEnable: function(){
+          blink("#enabled");
+        }
 
-          , onKeyup: function(opt){
-            $("#keyup").text(printProperties(opt));
-          }
+        , onKeyup: function(opt){
+          $("#keyup").text(printProperties(opt));
+        }
 
-          , onFail: function(){
-            blink("#fail");
-          }
+        , onFail: function(){
+          blink("#fail");
+        }
 
-          , onSuccess: function(opt){
-            $("#success").text(printProperties(opt));
-          }
+        , onSuccess: function(opt){
+          $("#success").text(printProperties(opt));
+        }
 
-          , onProgress: function(opt){
-            $("#progress").text(printProperties(opt));
-          }
+        , onProgress: function(opt){
+          $("#progress").text(printProperties(opt));
+        }
 
-        });
-      });
+      });      
 
       btnDisable1.click(function(){
         ta1.data("typingSkillTraining").off();
