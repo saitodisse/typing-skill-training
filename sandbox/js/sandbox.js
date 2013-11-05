@@ -5,15 +5,25 @@ $(function(){
     , typingSkillTraining1
   ;
 
-  var blink = function(eleId){
-    $(eleId)
+  var blink = function(elementOrSelector, options){
+    var eleJq = $(elementOrSelector);
+
+    if( $.isFunction(elementOrSelector.val) ){
+      eleJq = elementOrSelector;
+    }
+
+    if(!options){
+      options = {};
+    }
+
+    eleJq
       .stop()
       .animate({
-        backgroundColor: "#5f5"
-      }, 50 )
+        backgroundColor: options.color_start || "#5f5"
+      }, options.speed_start || 50 )
       .animate({
-        backgroundColor: "#fff"
-      }, 50 );
+        backgroundColor: options.color_finish || "#fff"
+      }, options.speed_finish || 50 );
   };
 
   var printProperties = function(obj){
@@ -29,7 +39,7 @@ $(function(){
         result += "\n";
       }
       result += item;
-      result += ":";
+      result += ": ";
       result += obj[props[i]];
     };
 
@@ -62,6 +72,16 @@ $(function(){
     , onProgress: function(opt){
       blink("#progress");
       $("#progress").text(printProperties(opt));
+      
+      var i = opt.index - 1;
+      blink(
+          $(".key:eq(" + i + ")")
+        , { color_start:"#3ff"
+          , color_finish:"#eee"
+          , speed_start: 50 
+          , speed_finish: 100 
+          }
+      );
     }
 
   });      

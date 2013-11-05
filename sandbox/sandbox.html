@@ -3,8 +3,9 @@
   <head>
     <title>Typing Skill Training :: Sandbox</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
     <!-- Bootstrap -->
-    <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="bootstrap-3.0.1/css/bootstrap.css" rel="stylesheet" media="screen">
     <link href="css/sandbox.css" rel="stylesheet" media="screen">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -15,62 +16,45 @@
     <![endif]-->
   </head>
   <body>
+
+  <div class="container">
   <h1>Typing Skill Training :: Sandbox</h1>
 
-  <div class="key-box-container">
-    <div class="key">
-      A
+    <h3>press keys below</h3>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="key-box-container unicode">
+          <div class="key">↑</div>
+          <div class="key">↑</div>
+          <div class="key">↓</div>
+          <div class="key">↓</div>
+          <div class="key">←</div>
+          <div class="key">→</div>
+          <div class="key">←</div>
+          <div class="key">→</div>
+          <div class="key">B</div>
+          <div class="key">A</div>
+          <div class="key">↲</div>
+        </div>
+      </div>
     </div>
-    <div class="key">
-      Alt
+
+    <h3>Events</h3>
+    <div class="row">
+      <div class="col-lg-2 boxed" id="enabled">enabled</div>
+      <div class="col-lg-2 boxed" id="disabled">disabled</div>
+      <div class="col-lg-2 boxed" id="keyup">keyup</div>
+      <div class="col-lg-2 boxed" id="progress">progress</div>
+      <div class="col-lg-2 boxed" id="fail">fail</div>
+      <div class="col-lg-2 boxed" id="success">success</div>
     </div>
-    <div class="key">
-      Ctrl
-    </div>
-    <div class="key">
-      Shift
-    </div>
+
   </div>
-
-  <br />
-  <br />
-  <br />
-  <br />
-
-    <div class="boxed" id="enableTypingSkillTraining1">()</div>
-    <div class="boxed" id="disableTypingSkillTraining1">$("window").data("typingSkillTraining").off()</div>
-    
-    <br/>
-    <br/>
-    <br/>
-    <p>events:</p>
-    <br/>
-    <div class="boxed" id="enabled">.enabled</div>
-    <div class="boxed" id="disabled">.disabled</div>
-    <div class="boxed" id="keyup">.keyup</div>
-    
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    .progress: 
-    <div class="boxed" id="progress">&nbsp;</div>
-    <div class="boxed" id="fail">.fail</div>
-    
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    .success: 
-    <div class="boxed" id="success">&nbsp;</div>
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script type="text/javascript" src="../bower_components/jquery/jquery.js"></script>
   <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script src="bootstrap/js/bootstrap.js"></script>
-
+  <script src="bootstrap-3.0.1/js/bootstrap.js"></script>
   <script type="text/javascript" src="../bower_components/jquery-color/jquery.color.js"></script>
   <script type="text/javascript" src="../javascripts/jquery.typingSkillTraining.js"></script>
   <script type="text/javascript" src="js/sandbox.js"></script>
