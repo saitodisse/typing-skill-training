@@ -1,12 +1,15 @@
 Typing Skill Training
 ===========
-here: http://saitodisse.github.io/typing-skill-training/
+demo:    http://saitodisse.github.io/typing-skill-training/
+sandbox: http://saitodisse.github.io/typing-skill-training/sandbox/sandbox.html
+tests:   http://saitodisse.github.io/typing-skill-training/javascripts/specs/SpecRunner.html
 
-things to made this an incredible app:
-- Better code with Jasmine's tests
+Things to made this an incredible app:
+-------------------------
+- Better code with Jasmine's tests (OK)
+- See pressed keys (in progress)
 - Create/fork new sequences
 - Saving server-side
-- See pressed keys
 - Record intervals of each pressed key
 - Ranking: by game, global
 - Login by facebook, github and google
@@ -16,7 +19,7 @@ things to made this an incredible app:
 - Random words, training typing, programming languages
 
 Regex game
-=========================================================================
+-------------------------
 - **3** dogs
 - I want **17** cakes
 - Only **10.50** on tips for you
