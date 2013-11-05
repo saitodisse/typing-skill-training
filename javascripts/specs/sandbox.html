@@ -15,18 +15,21 @@
 </head>
 <body>
   <h1>Typing Skill Training Sandbox</h1>
+
+  <p>$("#textarea1").typingSkillTraining</p>
+
   <div>
     <textarea id="textarea1"></textarea>
-    <div class="boxed" id="enableTypingSkillTraining1">$("#textarea1").typingSkillTraining()</div>
+    <div class="boxed" id="enableTypingSkillTraining1">()</div>
     <div class="boxed" id="disableTypingSkillTraining1">$("#textarea1").data("typingSkillTraining").off()</div>
     <p>events:</p>
-    <div class="boxed" id="enabled">$("#textarea1").typingSkillTraining.enabled</div>
-    <div class="boxed" id="disabled">$("#textarea1").typingSkillTraining.disabled</div>
-    <div class="boxed" id="keyup">$("#textarea1").typingSkillTraining.keyup</div>
-    $("#textarea1").typingSkillTraining.progress: 
+    <div class="boxed" id="enabled">.enabled</div>
+    <div class="boxed" id="disabled">.disabled</div>
+    <div class="boxed" id="keyup">.keyup</div>
+    .progress: 
       <pre id="progress">&nbsp;</pre>
-    <div class="boxed" id="fail">$("#textarea1").typingSkillTraining.fail</div>
-    $("#textarea1").typingSkillTraining.success: 
+    <div class="boxed" id="fail">.fail</div>
+    .success: 
       <pre id="success">&nbsp;</pre>
   </div>
 
@@ -85,6 +88,7 @@
         }
 
         , onKeyup: function(opt){
+          blink("#keyup");
           $("#keyup").text(printProperties(opt));
         }
 
@@ -93,10 +97,12 @@
         }
 
         , onSuccess: function(opt){
+          blink("#success");
           $("#success").text(printProperties(opt));
         }
 
         , onProgress: function(opt){
+          blink("#progress");
           $("#progress").text(printProperties(opt));
         }
 
