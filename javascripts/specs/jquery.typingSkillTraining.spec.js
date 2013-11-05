@@ -1,16 +1,49 @@
 var globalObj = this;
+
 describe("typingSkillTraining keyup tests", function() {
 
-  var triggerKeyUp = function(key, context){
-        if(context === undefined){
-          context = globalObj;
+  var   triggerKeyUp = function(key, context){
+          if(context === undefined){
+            context = globalObj;
+          }
+          $(context).trigger($.Event("keyup", { which: key }));
         }
-        $(context).trigger($.Event("keyup", { which: key }));
-      }
+      , on_enabled_executed = false
+      , on_fail_executed = false
+      , on_success_executed = false
+        on_keyup_list = []
   ;
 
   beforeEach(function() {
-    $(globalObj).typingSkillTraining();
+    on_enabled_executed = false;
+    on_fail_executed = false;
+    on_success_executed = false;
+    on_keyup_list = [];
+
+    $(globalObj).typingSkillTraining({
+          onDisable: function(){
+          blink("#disabled");
+        }
+
+        , onEnable: function(){
+          on_enabled_executed = true;
+        }
+
+        , onKeyup: function(opt){
+          on_keyup_list.push(opt.which);
+        }
+
+        , onFail: function(){
+          on_fail_executed = true;
+        }
+
+        , onSuccess: function(opt){
+          on_success_executed = true;
+        }
+
+        , onProgress: function(opt){
+        }
+      });
   });
 
   it("$.fn.typingSkillTraining is defined", function() {
@@ -19,34 +52,43 @@ describe("typingSkillTraining keyup tests", function() {
   });
 
   it("typingSkillTraining.enabled triggered on init", function() {
-    var spyEvent = spyOnEvent(globalObj, 'typingSkillTraining.enabled');
-    $(globalObj).typingSkillTraining();
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(on_enabled_executed).toBeTruthy();
   });
 
-  it("typingSkillTraining.enabled triggered on init on other element", function() {
-    var otherElement = $("<div/>");
-    var spyEvent = spyOnEvent(otherElement, 'typingSkillTraining.enabled');
-    $(otherElement).typingSkillTraining();
-    expect(spyEvent).toHaveBeenTriggered();
-  });
-
-  it("typingSkillTraining.keyup triggered on keyup", function() {
-    var spyEvent = spyOnEvent(globalObj, 'typingSkillTraining.keyup');
+  it("onKeyup triggered on keyup", function() {
     triggerKeyUp(64);
-    expect(spyEvent).toHaveBeenTriggered();
+    expect(on_keyup_list[0]).toEqual(64);
   });
 
-
-  it("typingSkillTraining.keyup gives the event.which", function() {
-    var keyPressed;
-    $(globalObj).on("typingSkillTraining.keyup", function(ev, opt){
-      keyPressed = opt.which;
-    });
-
+  it("onFail triggered on wrong key pressed", function() {
+    expect(on_fail_executed).toBeFalsy();
     triggerKeyUp(64);
-
-    expect(keyPressed).toEqual(64);
+    expect(on_fail_executed).toBeTruthy();
   });
+
+  it("onFail not triggered when right key was pressed", function() {
+    expect(on_fail_executed).toBeFalsy();
+    triggerKeyUp(38);
+    expect(on_fail_executed).toBeFalsy();
+    triggerKeyUp(38);
+    expect(on_fail_executed).toBeFalsy();
+  });
+
+  it("onSuccess: sall correct sequence leads to success", function() {
+    expect(on_success_executed).toBeFalsy();
+    triggerKeyUp(38);
+    triggerKeyUp(38);
+    triggerKeyUp(40);
+    triggerKeyUp(40);
+    triggerKeyUp(37);
+    triggerKeyUp(39);
+    triggerKeyUp(37);
+    triggerKeyUp(39);
+    triggerKeyUp(66);
+    triggerKeyUp(65);
+    triggerKeyUp(13);
+    expect(on_success_executed).toBeTruthy();
+  });
+
 });
 
