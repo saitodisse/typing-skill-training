@@ -31,6 +31,7 @@
   </div>
 
   <script type="text/javascript" src="../../bower_components/jquery/jquery.js"></script>
+  <script type="text/javascript" src="../../bower_components/jquery-color/jquery.color.js"></script>
   <script type="text/javascript" src="../jquery.typingSkillTraining.js"></script>
   <script type="text/javascript">
     $(function(){
@@ -46,8 +47,12 @@
       var blink = function(eleId){
         $(eleId)
           .stop()
-          .fadeOut(50)
-          .fadeIn(50);
+          .animate({
+            backgroundColor: "#5f5"
+          }, 50 )
+          .animate({
+            backgroundColor: "#fff"
+          }, 50 );
       };
 
       var printProperties = function(obj){
