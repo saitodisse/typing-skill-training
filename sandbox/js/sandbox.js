@@ -20,10 +20,10 @@ $(function(){
       .stop()
       .animate({
         backgroundColor: options.color_start || "#5f5"
-      }, options.speed_start || 30 )
+      }, options.speed_start || 20 )
       .animate({
         backgroundColor: options.color_finish || "#fff"
-      }, options.speed_finish || 20 );
+      }, options.speed_finish || 50 );
   };
 
   var printProperties = function(obj){
@@ -36,7 +36,7 @@ $(function(){
       var item = props[i];
 
       if(i > 0){
-        result += "\n";
+        result += "<br />";
       }
       result += item;
       result += ": ";
@@ -57,21 +57,21 @@ $(function(){
 
     , onKeyup: function(opt){
       blink("#keyup");
-      $("#keyup").text(printProperties(opt));
+      $("#keyup").html(printProperties(opt));
     }
 
     , onFail: function(){
-      blink("#fail");
+      blink("#fail", {color_start: "#f33"});
     }
 
     , onSuccess: function(opt){
       blink("#success");
-      $("#success").text(printProperties(opt));
+      $("#success").html(printProperties(opt));
     }
 
     , onProgress: function(opt){
       blink("#progress");
-      $("#progress").text(printProperties(opt));
+      $("#progress").html(printProperties(opt));
       
       var i = opt.index > 0 ? opt.index - 1 : 0
         , speed_start = 50

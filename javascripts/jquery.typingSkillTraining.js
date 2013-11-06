@@ -55,7 +55,7 @@
                 attachExternalEvent(options.onProgress, {
                     expected: options.SEQUENCE[index-1],
                     key: keyPressed,
-                    index: index,
+                    index: index+1,
                     status: "fail"
                   }
                 );
