@@ -98,7 +98,7 @@ describe("typingSkillTraining keyup tests", function() {
     expect(on_success_executed).toBeTruthy();
   });
 
-  it("onProgress should be called all times", function() {
+  it("onProgress should be called all the time", function() {
     triggerKeyUp(38);
     triggerKeyUp(38);
     triggerKeyUp(40);
