@@ -38,11 +38,6 @@ body{
   -webkit-box-shadow: 2px 4px 4px #ddd;
   box-shadow: 2px 4px 4px #ddd;
   background-color: #fff;
-  background-image: -moz-linear-gradient(top, #eee, #fff, #eee);
-  background-image: -ms-linear-gradient(top, #eee, #fff, #eee);
-  background-image: -o-linear-gradient(top, #eee, #fff, #eee);
-  background-image: -webkit-linear-gradient(top, #eee, #fff, #eee);
-  background-image: linear-gradient(top, #eee, #fff, #eee);
   padding: 15px 10px;
   margin: 5p 7px;
   float: left;

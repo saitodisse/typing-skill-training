@@ -20,10 +20,10 @@ $(function(){
       .stop()
       .animate({
         backgroundColor: options.color_start || "#5f5"
-      }, options.speed_start || 50 )
+      }, options.speed_start || 30 )
       .animate({
         backgroundColor: options.color_finish || "#fff"
-      }, options.speed_finish || 50 );
+      }, options.speed_finish || 20 );
   };
 
   var printProperties = function(obj){
@@ -73,13 +73,36 @@ $(function(){
       blink("#progress");
       $("#progress").text(printProperties(opt));
       
-      var i = opt.index - 1;
+      var i = opt.index > 0 ? opt.index - 1 : 0
+        , speed_start = 50
+        , speed_finish = 100
+
+
+      var color = "#3dd";
+      if(opt.status === "success"){
+        color = "#3f3";
+        speed_finish = 1200;
+
+        blink(
+            $(".key-box-container")
+          , { color_start: color
+            , color_finish:"#eee"
+            , speed_start: speed_start 
+            , speed_finish: speed_finish 
+            }
+        );
+      }
+      else if(opt.status === "fail"){
+        color = "#f33";
+        speed_finish = 800;
+      }
+
       blink(
           $(".key:eq(" + i + ")")
-        , { color_start:"#3ff"
+        , { color_start: color
           , color_finish:"#eee"
-          , speed_start: 50 
-          , speed_finish: 100 
+          , speed_start: speed_start 
+          , speed_finish: speed_finish 
           }
       );
     }

@@ -22,6 +22,7 @@
                 , index = 0   //global index
                 , start       //Date() when user starts to type
                 , current = $(this)
+                , keyPressed
               ;
 
               var attachExternalEvent = function(eventCallback){
@@ -45,43 +46,46 @@
 
               // private methods
               var keyup = function(event){
-                attachExternalEvent(options.onKeyup, {which : event.which});
-                checkTypingSkillTrainingCode(event.which);
+                keyPressed = event.which;
+                attachExternalEvent(options.onKeyup, { which : keyPressed });
+                checkTypingSkillTrainingCode();
               };
 
               var failTypingSkillTraining = function(){
-                index = 0;
-                clearInterval(tid);
+                attachExternalEvent(options.onProgress, {
+                    expected: options.SEQUENCE[index-1],
+                    key: keyPressed,
+                    index: index,
+                    status: "fail"
+                  }
+                );
+
                 attachExternalEvent(options.onFail);
+
+                clearInterval(tid);
+                index = 0;
               };
 
-              var checkTypingSkillTrainingCode = function(key){
+              var checkTypingSkillTrainingCode = function(){
                 if(index === 0){
                   start = new Date();
                 }
 
                 clearInterval(tid);
-                var isCorret = options.SEQUENCE[index] === key;
+                var isCorret = options.SEQUENCE[index] === keyPressed;
 
                 if(isCorret){
                   index++;
                   tid = setTimeout(failTypingSkillTraining, 1000);
                 }
                 else{
-                  attachExternalEvent(options.onProgress, {
-                    expected: options.SEQUENCE[index-1],
-                      received: key,
-                      index: index,
-                      status: "fail"
-                    }
-                  );
                   return failTypingSkillTraining();
                 }
 
                 if(index === options.SEQUENCE.length){
                   attachExternalEvent(options.onProgress, {
-                    expected: options.SEQUENCE[index-1],
-                      received: key,
+                      expected: options.SEQUENCE[index-1],
+                      received: keyPressed,
                       index: index,
                       status: "success"
                     }
@@ -95,8 +99,8 @@
                 }
 
                 attachExternalEvent(options.onProgress, {
-                  expected: options.SEQUENCE[index-1],
-                    received: key,
+                    expected: options.SEQUENCE[index-1],
+                    received: keyPressed,
                     index: index,
                     status: "inProgress"
                   }
