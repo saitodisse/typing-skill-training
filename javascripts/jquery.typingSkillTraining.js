@@ -68,10 +68,25 @@
                   tid = setTimeout(failTypingSkillTraining, 1000);
                 }
                 else{
+                  attachExternalEvent(options.onProgress, {
+                    expected: options.SEQUENCE[index-1],
+                      received: key,
+                      index: index,
+                      status: "fail"
+                    }
+                  );
                   return failTypingSkillTraining();
                 }
 
                 if(index === options.SEQUENCE.length){
+                  attachExternalEvent(options.onProgress, {
+                    expected: options.SEQUENCE[index-1],
+                      received: key,
+                      index: index,
+                      status: "success"
+                    }
+                  );
+  
                   return function(){
                     index = 0;
                     clearInterval(tid);
@@ -82,7 +97,8 @@
                 attachExternalEvent(options.onProgress, {
                   expected: options.SEQUENCE[index-1],
                     received: key,
-                    index: index
+                    index: index,
+                    status: "inProgress"
                   }
                 );
               };

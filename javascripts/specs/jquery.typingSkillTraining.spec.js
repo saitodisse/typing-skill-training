@@ -11,7 +11,8 @@ describe("typingSkillTraining keyup tests", function() {
       , on_enabled_executed = false
       , on_fail_executed = false
       , on_success_executed = false
-        on_keyup_list = []
+      , on_progress_count = 0
+      , on_keyup_list = []
   ;
 
   beforeEach(function() {
@@ -19,31 +20,38 @@ describe("typingSkillTraining keyup tests", function() {
     on_fail_executed = false;
     on_success_executed = false;
     on_keyup_list = [];
+    on_progress_count = 0;
 
+    // enable plugin
     $(globalObj).typingSkillTraining({
-          onDisable: function(){
-          blink("#disabled");
-        }
+        onDisable: function(){
+      }
 
-        , onEnable: function(){
-          on_enabled_executed = true;
-        }
+      , onEnable: function(){
+        on_enabled_executed = true;
+      }
 
-        , onKeyup: function(opt){
-          on_keyup_list.push(opt.which);
-        }
+      , onKeyup: function(opt){
+        on_keyup_list.push(opt.which);
+      }
 
-        , onFail: function(){
-          on_fail_executed = true;
-        }
+      , onFail: function(){
+        on_fail_executed = true;
+      }
 
-        , onSuccess: function(opt){
-          on_success_executed = true;
-        }
+      , onSuccess: function(opt){
+        on_success_executed = true;
+      }
 
-        , onProgress: function(opt){
-        }
-      });
+      , onProgress: function(opt){
+        on_progress_count += 1;
+      }
+    });    
+  });
+
+  afterEach(function(){
+    // disable plugin
+    $(globalObj).data("typingSkillTraining").off();
   });
 
   it("$.fn.typingSkillTraining is defined", function() {
@@ -88,6 +96,21 @@ describe("typingSkillTraining keyup tests", function() {
     triggerKeyUp(65);
     triggerKeyUp(13);
     expect(on_success_executed).toBeTruthy();
+  });
+
+  it("onProgress should be called all times", function() {
+    triggerKeyUp(38);
+    triggerKeyUp(38);
+    triggerKeyUp(40);
+    triggerKeyUp(40);
+    triggerKeyUp(37);
+    triggerKeyUp(39);
+    triggerKeyUp(37);
+    triggerKeyUp(39);
+    triggerKeyUp(66);
+    triggerKeyUp(65);
+    triggerKeyUp(13);
+    expect(on_progress_count).toBe(11);
   });
 
 });
