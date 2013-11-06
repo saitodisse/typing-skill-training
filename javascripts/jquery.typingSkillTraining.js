@@ -2,13 +2,14 @@
   $.extend($.fn, {
       typingSkillTraining: function(options) {
           options = $.extend({
-              SEQUENCE: [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13] // default KONAMI sequence
+              // default KONAMI sequence
+              SEQUENCE: [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13] 
             
-            // for post reference. 
-            // Use like that: $(element).data("typingSkillTraining").off();
+              // for latter reference. 
+              // Use like that: $(element).data("typingSkillTraining").off();
             , disableFunction: undefined
             
-            //API Events
+              //API Events
             , onEnable: undefined
             , onDisable: undefined
             , onKeyup: undefined
@@ -18,99 +19,127 @@
           }, options);
 
           this.each(function() {
-              var tid         //setTimeout ID
-                , index = 0   //global index
-                , start       //Date() when user starts to type
-                , current = $(this)
-                , keyPressed
-              ;
+            var tid         //setTimeout ID
+              , index = 0   //global index
+              , start       //Date() when user starts to type
+              , current = $(this)
+              , keyPressed
 
-              var attachExternalEvent = function(eventCallback){
+                // private methods
+                // ---------------
+              , triggerEvent = function(eventCallback){
                   if(eventCallback !== undefined && $.isFunction(eventCallback)){
                     var args = [].splice.call(arguments,0);
                     eventCallback.apply(null, args.splice(1));
                   }
-              }
+                }
 
-              var enable = function(){
-                  // attach keyup event
+              , enable = function(){
+                  // attach key-up event
                   current.on("keyup", keyup);
-                  attachExternalEvent(options.onEnable);
-              };
+                  triggerEvent(options.onEnable);
+                }
 
-              var disable = function(){
-                  // attach keyup event
+              , disable = function(){
+                  // remove key-up event
                   current.off("keyup", keyup);
-                  attachExternalEvent(options.onDisable);
-              };
+                  triggerEvent(options.onDisable);
+                }
 
-              // private methods
-              var keyup = function(event){
-                keyPressed = event.which;
-                attachExternalEvent(options.onKeyup, { which : keyPressed });
-                checkTypingSkillTrainingCode();
-              };
+              , keyup = function(event){
+                  keyPressed = event.which;
+                  triggerEvent(options.onKeyup, { which : keyPressed });
+                  checkTypingSkillTrainingCode();
+                }
 
-              var failTypingSkillTraining = function(){
-                attachExternalEvent(options.onProgress, {
-                    expected: options.SEQUENCE[index-1],
-                    key: keyPressed,
-                    index: index+1,
-                    status: "fail"
+              , failTypingSkillTraining = function(){
+                  triggerEvent(options.onProgress, {
+                      expected: options.SEQUENCE[index-1],
+                      key: keyPressed,
+                      index: index+1,
+                      status: "fail"
+                    }
+                  );
+
+                  triggerEvent(options.onFail);
+
+                  // resets counter and intervals
+                  clearInterval(tid);
+                  index = 0;
+                }
+
+                // checkTypingSkillTrainingCode : main function
+                // --------------------------------------------
+                // verifies if the sequence is correct or fails
+              , checkTypingSkillTrainingCode = function(){
+                  
+                  // if was the first key pressed
+                  // then starts to measure time
+                  if(index === 0){
+                    start = new Date();
                   }
-                );
 
-                attachExternalEvent(options.onFail);
+                  // resets fail timeout
+                  clearInterval(tid);
 
-                clearInterval(tid);
-                index = 0;
-              };
+                  var isCorret = options.SEQUENCE[index] === keyPressed;
 
-              var checkTypingSkillTrainingCode = function(){
-                if(index === 0){
-                  start = new Date();
-                }
+                  if(isCorret){
+                    // go to the next expected key
+                    index++;
 
-                clearInterval(tid);
-                var isCorret = options.SEQUENCE[index] === keyPressed;
+                    // sets fail timeout
+                    tid = setTimeout(failTypingSkillTraining, 1000);
+                  }
+                  else{
+                    // FAIL
+                    // ----
+                    return failTypingSkillTraining();
+                  }
 
-                if(isCorret){
-                  index++;
-                  tid = setTimeout(failTypingSkillTraining, 1000);
-                }
-                else{
-                  return failTypingSkillTraining();
-                }
+                  // SUCCESS
+                  // -------
+                  // all keys was pressed correctly
+                  if(index === options.SEQUENCE.length){
+                    triggerEvent(options.onProgress, {
+                        //because index was already incremented
+                        expected: options.SEQUENCE[index-1],
+                        received: keyPressed,
+                        index: index,
+                        status: "success"
+                      }
+                    );
+    
+                    // resets counter and intervals
+                    index = 0;
+                    clearInterval(tid);
 
-                if(index === options.SEQUENCE.length){
-                  attachExternalEvent(options.onProgress, {
+                    triggerEvent(options.onSuccess, {
+                      executedTime : new Date() - start
+                    });
+
+                    return;
+                  }
+
+                  // ON PROGRESS
+                  // -----------
+                  triggerEvent(options.onProgress, {
                       expected: options.SEQUENCE[index-1],
                       received: keyPressed,
                       index: index,
-                      status: "success"
+                      status: "inProgress"
                     }
                   );
-  
-                  return function(){
-                    index = 0;
-                    clearInterval(tid);
-                    attachExternalEvent(options.onSuccess, {executedTime : new Date() - start })
-                  }();
                 }
+            ;
 
-                attachExternalEvent(options.onProgress, {
-                    expected: options.SEQUENCE[index-1],
-                    received: keyPressed,
-                    index: index,
-                    status: "inProgress"
-                  }
-                );
-              };
-
-              enable();
-              options.disableFunction = disable;
+            enable();
+            
+            // references disable on options object
+            options.disableFunction = disable;
 
           }).data('typingSkillTraining', {
+              // save disable function on "jQuery data"
               off: options.disableFunction
           });
 
