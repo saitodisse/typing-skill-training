@@ -6,4 +6,4 @@
       return this.html.fadeOut().promise();
     }
   }
-}(Konami));
+}(Sandbox));

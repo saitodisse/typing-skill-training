@@ -3,7 +3,8 @@
     this.html = html;
 
     this.show = function(){
+      this.html.removeClass('hidden');
       return this.html.fadeIn().promise();
     }
   }
-}(Konami));
+}(Sandbox));

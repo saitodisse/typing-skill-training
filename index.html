@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <!-- Bootstrap -->
     <link href="external-libs/bootstrap/bootstrap.css" rel="stylesheet" media="screen">
-    <link href="css/sandbox.css" rel="stylesheet" media="screen">
+    <link href="css/sandbox.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -16,8 +16,10 @@
     <![endif]-->
   </head>
   <body>
-
-  <div class="container">
+  <div class="loading">
+    LOADING...
+  </div>
+  <div class="container hidden">
   <h1>Typing Skill Training :: Sandbox</h1>
 
     <h3>press keys below:</h3>
@@ -63,6 +65,13 @@
   <script type="text/javascript" src="external-libs/bootstrap/bootstrap.js"></script>
   <script type="text/javascript" src="external-libs/jquery-color/jquery.color.js"></script>
   <script type="text/javascript" src="js/jquery.typingSkillTraining.js"></script>
-  <script type="text/javascript" src="js/sandbox.js"></script>
+  
+  <script type="text/javascript" src="js/sandbox/sandbox.js"></script>
+  <script type="text/javascript" src="js/sandbox/sandbox.boot.js"></script>
+  <script type="text/javascript" src="js/sandbox/sandbox.loading.js"></script>
+  <script type="text/javascript" src="js/sandbox/sandbox.target.js"></script>
+  <script type="text/javascript" src="js/sandbox/sandbox.container.js"></script>
+  <script type="text/javascript" src="js/sandbox/sandbox.typing_component.js"></script>
+
   </body>
 </html>
