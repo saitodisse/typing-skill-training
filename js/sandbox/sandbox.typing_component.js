@@ -3,7 +3,7 @@
     this.targetElement = targetElement;
 
     this.init = function(opt){
-      Konami.typingComponent = targetElement.typingSkillTraining(opt);
+      Sandbox.typingComponent = targetElement.typingSkillTraining(opt);
     }
   }
-}(Konami));
+}(Sandbox));

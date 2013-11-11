@@ -87,7 +87,7 @@ describe("typingSkillTraining keyup tests", function() {
     sh.triggerKeyUp(15);
     expect(sh.on_progress_count).toBe(3);
     expect(sh.on_success_executed).toBeTruthy();
-  });
+ });
 
 });
 

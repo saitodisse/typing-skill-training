@@ -1,4 +1,4 @@
-.boxed{
+.boxed {
   border-color: #bbb;
   border-width: 1px;
   border-style: solid;
@@ -6,7 +6,7 @@
   background-color: #ddd;
 }
 
-.key{
+.key {
   border: 2px solid #aaa;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -25,7 +25,7 @@
   min-width: 46px;
 }
 
-.key-box-container{
+.key-box-container {
   border: 1px solid #bbb;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -37,4 +37,13 @@
   padding: 15px 10px;
   margin: 5p 7px;
   float: left;
+}
+
+.hidden {
+  display: none;
+}
+
+.loading{
+  font-size: 4em;
+  margin: 5%;
 }

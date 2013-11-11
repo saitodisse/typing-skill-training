@@ -1,8 +1,7 @@
 Typing Skill Training
 ===========
-- demo:    http://saitodisse.github.io/typing-skill-training/
-- sandbox: http://saitodisse.github.io/typing-skill-training/sandbox/sandbox.html
-- tests:   http://saitodisse.github.io/typing-skill-training/javascripts/specs/SpecRunner.html
+- demo:    http://saitodisse.github.io/typing-skill-training
+- tests:   http://saitodisse.github.io/typing-skill-training/specs/SpecRunner.html
 
 Things to made this an incredible app:
 -------------------------
