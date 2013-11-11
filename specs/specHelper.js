@@ -62,5 +62,9 @@ var specHelper = function(){
       $(globalObj).data("typingSkillTraining").off();
     };
 
+  self.clearSandbox = function(){
+    $("#sandbox").html("");
+  }
+
   return self;
 };

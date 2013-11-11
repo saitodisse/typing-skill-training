@@ -140,7 +140,10 @@
             // references disable on options object
             options.disableFunction = disable;
 
+            //panel
+            //-----
             if(options.panel !== undefined){
+              //initialize values
               options.panel.find(".lastTimeSpan").text("0.000 seconds");
             }
 
