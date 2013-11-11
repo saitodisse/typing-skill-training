@@ -141,11 +141,8 @@
             options.disableFunction = disable;
 
             if(options.panel !== undefined){
-              panel = options.panel;
-              panel.append("<ul>");
-              panel.find("ul").append("<li class='lastTimeSpan'>last time: 0.000 sec</li>");
+              options.panel.find(".lastTimeSpan").text("0.000 seconds");
             }
-
 
           }).data('typingSkillTraining', {
               // save disable function on "jQuery data"

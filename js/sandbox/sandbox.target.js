@@ -97,9 +97,9 @@
         }
     ;
 
-    this.initTypingComponent = function(){
+    this.initTypingComponent = function(opt){
       this.typingComponent = new Sandbox.TypingComponent(targetElement);
-      this.typingComponent.init({
+      this.typingComponent.init($.extend({
           onDisable: function(){
           blink("#disabled");
         }
@@ -134,7 +134,7 @@
 
           blinkKeyboard(opt);
         }
-      });
+      }, opt));
     }
   }
 }(Sandbox));
