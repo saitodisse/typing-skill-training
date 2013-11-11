@@ -46,34 +46,14 @@ describe("typingSkillTraining keyup tests", function() {
     expect(sh.on_fail_executed).toBeFalsy();
   });
 
-  it("onSuccess: sall correct sequence leads to success", function() {
+  it("onSuccess: all correct sequence leads to success", function() {
     expect(sh.on_success_executed).toBeFalsy();
-    sh.triggerKeyUp(38);
-    sh.triggerKeyUp(38);
-    sh.triggerKeyUp(40);
-    sh.triggerKeyUp(40);
-    sh.triggerKeyUp(37);
-    sh.triggerKeyUp(39);
-    sh.triggerKeyUp(37);
-    sh.triggerKeyUp(39);
-    sh.triggerKeyUp(66);
-    sh.triggerKeyUp(65);
-    sh.triggerKeyUp(13);
+    sh.simulateSuccess();
     expect(sh.on_success_executed).toBeTruthy();
   });
 
-  it("onProgress should be called all times", function() {
-    sh.triggerKeyUp(38);
-    sh.triggerKeyUp(38);
-    sh.triggerKeyUp(40);
-    sh.triggerKeyUp(40);
-    sh.triggerKeyUp(37);
-    sh.triggerKeyUp(39);
-    sh.triggerKeyUp(37);
-    sh.triggerKeyUp(39);
-    sh.triggerKeyUp(66);
-    sh.triggerKeyUp(65);
-    sh.triggerKeyUp(13);
+  it("onProgress: should be called all times", function() {
+    sh.simulateSuccess();
     expect(sh.on_progress_count).toBe(11);
   });
 

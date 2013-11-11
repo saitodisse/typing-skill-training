@@ -9,6 +9,20 @@ var specHelper = function(){
       }
       $(context).trigger($.Event("keyup", { which: key }));
     };
+  
+  self.simulateSuccess = function(){
+    self.triggerKeyUp(38);
+    self.triggerKeyUp(38);
+    self.triggerKeyUp(40);
+    self.triggerKeyUp(40);
+    self.triggerKeyUp(37);
+    self.triggerKeyUp(39);
+    self.triggerKeyUp(37);
+    self.triggerKeyUp(39);
+    self.triggerKeyUp(66);
+    self.triggerKeyUp(65);
+    self.triggerKeyUp(13);
+  };    
 
   self.on_enabled_executed = false;
   self.on_fail_executed = false;
