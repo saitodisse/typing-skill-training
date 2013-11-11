@@ -2,56 +2,20 @@ var globalObj = this;
 
 describe("typingSkillTraining keyup tests", function() {
 
-  var   triggerKeyUp = function(key, context){
-          if(context === undefined){
-            context = globalObj;
-          }
-          $(context).trigger($.Event("keyup", { which: key }));
-        }
-      , on_enabled_executed = false
-      , on_fail_executed = false
-      , on_success_executed = false
-      , on_progress_count = 0
-      , on_keyup_list = []
-  ;
+  var sh = specHelper();        
 
   beforeEach(function() {
-    on_enabled_executed = false;
-    on_fail_executed = false;
-    on_success_executed = false;
-    on_keyup_list = [];
-    on_progress_count = 0;
+    sh.on_enabled_executed = false;
+    sh.on_fail_executed = false;
+    sh.on_success_executed = false;
+    sh.on_keyup_list = [];
+    sh.on_progress_count = 0;
 
-    // enable plugin
-    $(globalObj).typingSkillTraining({
-        onDisable: function(){
-      }
-
-      , onEnable: function(){
-        on_enabled_executed = true;
-      }
-
-      , onKeyup: function(opt){
-        on_keyup_list.push(opt.which);
-      }
-
-      , onFail: function(){
-        on_fail_executed = true;
-      }
-
-      , onSuccess: function(opt){
-        on_success_executed = true;
-      }
-
-      , onProgress: function(opt){
-        on_progress_count += 1;
-      }
-    });    
+    sh.enablePlugin();
   });
 
   afterEach(function(){
-    // disable plugin
-    $(globalObj).data("typingSkillTraining").off();
+    sh.disablePlugin()
   });
 
   it("$.fn.typingSkillTraining is defined", function() {
@@ -60,57 +24,69 @@ describe("typingSkillTraining keyup tests", function() {
   });
 
   it("typingSkillTraining.enabled triggered on init", function() {
-    expect(on_enabled_executed).toBeTruthy();
+    expect(sh.on_enabled_executed).toBeTruthy();
   });
 
   it("onKeyup triggered on keyup", function() {
-    triggerKeyUp(64);
-    expect(on_keyup_list[0]).toEqual(64);
+    sh.triggerKeyUp(64);
+    expect(sh.on_keyup_list[0]).toEqual(64);
   });
 
   it("onFail triggered on wrong key pressed", function() {
-    expect(on_fail_executed).toBeFalsy();
-    triggerKeyUp(64);
-    expect(on_fail_executed).toBeTruthy();
+    expect(sh.on_fail_executed).toBeFalsy();
+    sh.triggerKeyUp(64);
+    expect(sh.on_fail_executed).toBeTruthy();
   });
 
   it("onFail not triggered when right key was pressed", function() {
-    expect(on_fail_executed).toBeFalsy();
-    triggerKeyUp(38);
-    expect(on_fail_executed).toBeFalsy();
-    triggerKeyUp(38);
-    expect(on_fail_executed).toBeFalsy();
+    expect(sh.on_fail_executed).toBeFalsy();
+    sh.triggerKeyUp(38);
+    expect(sh.on_fail_executed).toBeFalsy();
+    sh.triggerKeyUp(38);
+    expect(sh.on_fail_executed).toBeFalsy();
   });
 
   it("onSuccess: sall correct sequence leads to success", function() {
-    expect(on_success_executed).toBeFalsy();
-    triggerKeyUp(38);
-    triggerKeyUp(38);
-    triggerKeyUp(40);
-    triggerKeyUp(40);
-    triggerKeyUp(37);
-    triggerKeyUp(39);
-    triggerKeyUp(37);
-    triggerKeyUp(39);
-    triggerKeyUp(66);
-    triggerKeyUp(65);
-    triggerKeyUp(13);
-    expect(on_success_executed).toBeTruthy();
+    expect(sh.on_success_executed).toBeFalsy();
+    sh.triggerKeyUp(38);
+    sh.triggerKeyUp(38);
+    sh.triggerKeyUp(40);
+    sh.triggerKeyUp(40);
+    sh.triggerKeyUp(37);
+    sh.triggerKeyUp(39);
+    sh.triggerKeyUp(37);
+    sh.triggerKeyUp(39);
+    sh.triggerKeyUp(66);
+    sh.triggerKeyUp(65);
+    sh.triggerKeyUp(13);
+    expect(sh.on_success_executed).toBeTruthy();
   });
 
   it("onProgress should be called all times", function() {
-    triggerKeyUp(38);
-    triggerKeyUp(38);
-    triggerKeyUp(40);
-    triggerKeyUp(40);
-    triggerKeyUp(37);
-    triggerKeyUp(39);
-    triggerKeyUp(37);
-    triggerKeyUp(39);
-    triggerKeyUp(66);
-    triggerKeyUp(65);
-    triggerKeyUp(13);
-    expect(on_progress_count).toBe(11);
+    sh.triggerKeyUp(38);
+    sh.triggerKeyUp(38);
+    sh.triggerKeyUp(40);
+    sh.triggerKeyUp(40);
+    sh.triggerKeyUp(37);
+    sh.triggerKeyUp(39);
+    sh.triggerKeyUp(37);
+    sh.triggerKeyUp(39);
+    sh.triggerKeyUp(66);
+    sh.triggerKeyUp(65);
+    sh.triggerKeyUp(13);
+    expect(sh.on_progress_count).toBe(11);
+  });
+
+  it("the keys combinations can be changed", function(){
+    sh.disablePlugin();
+    sh.defaultOpt.sequence = [13, 14, 15];
+    sh.enablePlugin();
+
+    sh.triggerKeyUp(13);
+    sh.triggerKeyUp(14);
+    sh.triggerKeyUp(15);
+    expect(sh.on_progress_count).toBe(3);
+    expect(sh.on_success_executed).toBeTruthy();
   });
 
 });

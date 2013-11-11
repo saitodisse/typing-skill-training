@@ -119,10 +119,12 @@ $(function(){
                 , speed_finish: 100
               }
         );
-      $("#progress").html(printProperties(opt));
+        $("#progress").html(printProperties(opt));
 
-      blinkKeyboard(opt);
-    }
+        blinkKeyboard(opt);
+      }
+      
+    , panel: $(".panel")
   });
 
 });

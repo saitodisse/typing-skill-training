@@ -3,7 +3,7 @@
       typingSkillTraining: function(options) {
           options = $.extend({
               // default KONAMI sequence
-              SEQUENCE: [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13] 
+              sequence: [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 13] 
             
               // for latter reference. 
               // Use like that: $(element).data("typingSkillTraining").off();
@@ -16,6 +16,7 @@
             , onFail: undefined
             , onSuccess: undefined
             , onProgress: undefined
+            , panel: undefined
           }, options);
 
           this.each(function() {
@@ -24,6 +25,7 @@
               , start       //Date() when user starts to type
               , current = $(this)
               , keyPressed
+              , panel
 
                 // private methods
                 // ---------------
@@ -54,7 +56,7 @@
 
               , failTypingSkillTraining = function(){
                   triggerEvent(options.onProgress, {
-                      expected: options.SEQUENCE[index-1],
+                      expected: options.sequence[index-1],
                       key: keyPressed,
                       index: index+1,
                       status: "fail"
@@ -82,7 +84,7 @@
                   // resets fail timeout
                   clearInterval(tid);
 
-                  var isCorret = options.SEQUENCE[index] === keyPressed;
+                  var isCorret = options.sequence[index] === keyPressed;
 
                   if(isCorret){
                     // go to the next expected key
@@ -100,10 +102,10 @@
                   // SUCCESS
                   // -------
                   // all keys was pressed correctly
-                  if(index === options.SEQUENCE.length){
+                  if(index === options.sequence.length){
                     triggerEvent(options.onProgress, {
                         //because index was already incremented
-                        expected: options.SEQUENCE[index-1],
+                        expected: options.sequence[index-1],
                         received: keyPressed,
                         index: index,
                         status: "success"
@@ -124,7 +126,7 @@
                   // ON PROGRESS
                   // -----------
                   triggerEvent(options.onProgress, {
-                      expected: options.SEQUENCE[index-1],
+                      expected: options.sequence[index-1],
                       received: keyPressed,
                       index: index,
                       status: "inProgress"
@@ -138,9 +140,17 @@
             // references disable on options object
             options.disableFunction = disable;
 
+            if(options.panel !== undefined){
+              panel = options.panel;
+              panel.append("<ul>");
+              panel.find("ul").append("<li class='lastTimeSpan'>last time: 0.000 sec</li>");
+            }
+
+
           }).data('typingSkillTraining', {
               // save disable function on "jQuery data"
-              off: options.disableFunction
+                off: options.disableFunction
+              , panel: options.panel
           });
 
           return this;
