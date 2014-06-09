@@ -1,3 +1,6 @@
+by: [saitodisse](http://saitodisse.github.io/)
+
+
 Typing Skill Training
 ===========
 - demo:    http://saitodisse.github.io/typing-skill-training
